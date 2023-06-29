@@ -1,0 +1,1265 @@
+*,
+*::before,
+*::after {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+
+.container {
+    position: relative;
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: 100px, repeat(2, 1fr);
+    background: #F7F7FC;
+}
+
+/* HEADER */
+header {
+    grid-row: 1;
+    padding-left: 10%;
+    padding-right: 10%;
+    background: #fff;
+    height: 100px;
+    position: relative;
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    grid-template-rows: 1fr;
+}
+
+header .left {
+    grid-column: 1;
+    grid-row: 1;
+    height: 100px;
+    position: relative;
+}
+
+header .right {
+    grid-column: 2 / span 5;
+    grid-row: 1;
+    height: 100%;
+    position: relative;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
+
+header .logo2 {
+    position: relative;
+    margin-top: 30px;
+    height: 50px;
+}
+
+header .right .header-bar {
+    margin-top: 50px;
+}
+
+a {
+    text-decoration: none;
+    color: #F7F7FC;
+}
+
+header .right .header-bar a {
+    margin-right: 50px;
+    font-family: Mulish, sans-serif;
+    font-style: normal;
+    font-weight: 600;
+    font-size: 16px;
+    line-height: 20px;
+    letter-spacing: 0.005em;
+    color: #414141;
+}
+
+header .right .profile {
+    display: flex;
+    justify-content: space-around;
+    background-color: #FFF;
+}
+
+header .right .profile div {
+    position: relative;
+    padding-top: 40px;
+    background-color: #FFF;
+}
+
+header .right .profile div input {
+    background: #FFFFFF;
+    height: 30px;
+    width: 200px;
+    border: 1px solid #DEDEDE;
+    border-radius: 8px;
+}
+
+header .right .profile div input::placeholder {
+    padding-left: 15%;
+    font-size: 12px;
+}
+
+header .right .profile div i {
+    position: absolute;
+    top: 50px;
+    left: 10px;
+    font-size: 0.8em;
+    z-index: 9999;
+    color: #6E7191;
+}
+
+header .right .profile .search {
+    position: relative;
+    bottom: 15px;
+    right: 30px;
+    display: none;
+}
+
+header .right .profile a i {
+    display: block;
+    margin-right: 40px;
+    margin-top: 35px;
+    color: #414141;
+    font-size: 1em;
+}
+
+header .right .profile {
+    margin-top: 15px;
+    height: 50px;
+    border-radius: 50%;
+}
+
+header .nav-desktop {
+    width: 100px;
+    text-align: center;
+    z-index: 9999;
+    position: absolute;
+    right: 12%;
+    top: 85px;
+    background: #FFF;
+    display: none;
+    border-radius: 5px;
+    flex-direction: column;
+    box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.3);
+}
+
+header .nav-desktop a {
+    padding-top: 7px;
+    padding-bottom: 5px;
+    font-family: Mulish, sans-serif;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 20px;
+    letter-spacing: 0.75px;
+    color: #4E4B66;
+}
+
+header .right>a {
+    display: none;
+}
+
+header .right>i {
+    display: none;
+}
+
+/* NAVBAR */
+
+nav {
+    display: none;
+}
+
+nav>p {
+    display: none;
+}
+
+/* FOOTER */
+footer {
+    grid-row: 3;
+    background: #fff;
+    padding-top: 5%;
+    padding-left: 10%;
+    padding-right: 10%;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+}
+
+footer .information {
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+    /* flex-direction: column; */
+}
+
+footer .information .title {
+    font-family: Mulish, sans-serif;
+    font-style: normal;
+    font-weight: 700;
+    font-size: 16px;
+    line-height: 20px;
+    letter-spacing: 0.5px;
+    color: #000000;
+    margin-bottom: 20px;
+}
+
+footer .copyright {
+    margin-top: 20px;
+    align-items: center;
+    text-align: center;
+    font-family: Mulish, sans-serif;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 18px;
+    letter-spacing: 0.5px;
+    color: #4E4B66;
+}
+
+footer .footer-item1 {
+    flex-basis: 30%
+}
+
+footer .footer-item1 .logo2 {
+    height: 30%;
+    margin-bottom: 20px;
+}
+
+footer .footer-item1 p {
+    font-family: Mulish, sans-serif;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 32px;
+    letter-spacing: 0.75px;
+    color: #6E7191;
+}
+
+footer .information .footer-item1 p {
+    margin-top: -20px;
+}
+
+footer .footer-item2>div {
+    display: flex;
+    flex-direction: column;
+}
+
+footer .footer-item2>div p {
+    margin-top: 10px;
+    margin-bottom: 10px;
+    margin-right: 20px;
+}
+
+footer .footer-item2>div p a {
+    font-family: Mulish, sans-serif;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 18px;
+    letter-spacing: 0.5px;
+    color: #4E4B66;
+}
+
+footer .footer-item3>div {
+    display: grid;
+}
+
+footer .footer-item3>div img {
+    max-height: 30px;
+    margin-bottom: 20px;
+}
+
+footer .footer-item4>div {
+    display: flex;
+    flex-direction: column;
+}
+
+footer .footer-item4>div>div .visibility {
+    position: absolute;
+    color: #6E7191;
+}
+
+footer .footer-item4>div>div {
+    margin-bottom: 10px;
+}
+
+footer .footer-item4>div>div a {
+    margin-left: 10px;
+    font-family: Mulish, sans-serif;
+    font-style: normal;
+    font-weight: 600;
+    font-size: 14px;
+    line-height: 18px;
+    letter-spacing: 0.5px;
+    color: #6E7191;
+}
+
+footer .footer-item4>div>div i {
+    width: 10px;
+    color: #6E7191;
+}
+
+/* MAIN */
+main {
+    grid-row: 2;
+}
+
+main .content-1 {
+    padding-top: 5%;
+    padding-left: 10%;
+    padding-right: 10%;
+    background-color: #fff;
+    display: flex;
+}
+
+.content-1>img {
+    margin-right: 30px;
+    height: 400px;
+    padding: 30px;
+    border: 2px solid #DEDEDE;
+    border-radius: 16px;
+    align-self: flex-start
+}
+
+.content-1 .information_movie {
+    font-family: 'Mulish', sans-serif;
+    font-style: normal;
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+}
+
+.content-1 .information_movie .title {
+    font-family: 'Mulish', sans-serif;
+    font-style: normal;
+    margin-bottom: 20px;
+    line-height: 34px;
+}
+
+.content-1 .information_movie .title h1 {
+    font-weight: 700;
+    font-size: 32px;
+    letter-spacing: 1px;
+    color: #14142B;
+}
+
+.content-1 .information_movie .title p {
+    font-weight: 400;
+    font-size: 18px;
+    letter-spacing: 0.75px;
+    color: #4E4B66;
+}
+
+.content-1 .information_movie .information_details {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: 1fr;
+    padding-bottom: 20px;
+    border-bottom: 1px solid #DEDEDE;
+}
+
+.content-1 .information_movie .information_details .left {
+    grid-column: 1;
+}
+
+.content-1 .information_movie .information_details .right {
+    grid-column: 2 /span 3;
+}
+
+.content-1 .release,
+.director {
+    margin-bottom: 20px;
+}
+
+.content-1 .release h6,
+.duration h6,
+.director h6,
+.casts h6 {
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 24px;
+    letter-spacing: 0.75px;
+    color: #8692A6;
+}
+
+.content-1 .release p,
+.duration p,
+.director p,
+.casts p {
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 32px;
+    letter-spacing: 0.75px;
+    color: #121212;
+}
+
+.content-1 .information_movie .synopsis {
+    font-family: 'Mulish', sans-serif;
+    font-style: normal;
+    margin-top: 20px;
+    margin-bottom: 40px;
+}
+
+.content-1 .information_movie .synopsis h5 {
+    font-weight: 600;
+    font-size: 20px;
+    line-height: 34px;
+    letter-spacing: 0.5px;
+    color: #000000;
+}
+
+.content-1 .information_movie .synopsis p {
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 32px;
+    letter-spacing: 0.75px;
+    color: #4E4B66;
+}
+
+main .content-2 {
+    font-family: 'Mulish', sans-serif;
+    font-style: normal;
+    padding-top: 5%;
+    padding-left: 10%;
+    padding-right: 10%;
+    display: flex;
+    flex-direction: column;
+}
+
+.content-2 h1 {
+    text-align: center;
+    margin-bottom: 30px;
+    font-weight: 700;
+    font-size: 24px;
+    line-height: 30px;
+    letter-spacing: 0.25px;
+    color: #14142B;
+}
+
+.content-2 .search {
+    display: flex;
+    justify-content: space-around;
+    margin-bottom: 30px;
+}
+
+.content-2 .search>div {
+    display: flex;
+    justify-content: space-around;
+}
+
+.content-2 .search>div .location {
+    position: relative;
+}
+
+.content-2 .search>div .date {
+    position: relative;
+    margin-right: 20px;
+}
+
+.content-2 .search>div select {
+    width: 250px;
+    height: 50px;
+    appearance: none;
+    background: #EFF0F6;
+    border-radius: 6px;
+    border: none;
+    padding-left: 40px;
+    color: #4E4B66;
+}
+
+.content-2 .search>div .left {
+    position: absolute;
+    top: 15px;
+    left: 13px;
+    color: #A0A3BD;
+}
+
+.content-2 .search>div .right {
+    position: absolute;
+    top: 13px;
+    right: 13px;
+    color: #A0A3BD;
+}
+
+.list_ticket {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+}
+
+.list_ticket .card {
+    height: 300px;
+    width: 300px;
+    margin-bottom: 30px;
+    background: #FFFFFF;
+    border-radius: 8px;
+    display: flex;
+    flex-direction: column;
+}
+
+.list_ticket .card .top {
+    padding-top: 20px;
+    padding-bottom: 20px;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    align-items: center;
+    border-bottom: 0.5px solid #DEDEDE;
+}
+
+.list_ticket .card .top .img-card {
+    display: flex;
+    justify-content: space-around;
+}
+
+.list_ticket img {
+    max-width: 100px;
+}
+
+.list_ticket .top h1 {
+    padding: 0px;
+    margin: 0px;
+    margin-right: 10px;
+    text-align: left;
+    font-family: 'Mulish', sans-serif;
+    font-style: normal;
+    font-weight: 600;
+    font-size: 20px;
+    line-height: 32px;
+    letter-spacing: 0.75px;
+    color: #000000;
+}
+
+.list_ticket .top p {
+    padding: 0px;
+    margin: 0px;
+    margin-right: 10px;
+    font-family: 'Mulish', sans-serif;
+    font-style: normal;
+    font-weight: 300;
+    font-size: 10px;
+    line-height: 18px;
+    letter-spacing: 0.75px;
+    color: #6E7191;
+}
+
+.list_ticket .time {
+    margin: 10px 20px;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    grid-template-rows: repeat(2, 1fr);
+}
+
+.list_ticket .time p {
+    font-family: 'Mulish', sans-serif;
+    font-style: normal;
+    font-weight: 600;
+    font-size: 10px;
+    line-height: 23px;
+    align-items: center;
+    text-align: center;
+    letter-spacing: 0.75px;
+    color: #4E4B66;
+}
+
+.list_ticket .time .disable {
+    color: #A0A3BD;
+}
+
+.list_ticket .time .disable:hover {
+    color: #A0A3BD;
+}
+
+.list_ticket .time p:hover {
+    color: #5F2EEA;
+}
+
+.list_ticket .price {
+    margin: 0px 20px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
+
+.list_ticket .price h1 {
+    font-family: 'Mulish', sans-serif;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 32px;
+    align-items: center;
+    letter-spacing: 0.75px;
+    color: #6B6B6B;
+}
+
+.list_ticket .price p {
+    font-family: 'Mulish', sans-serif;
+    font-style: normal;
+    font-weight: 600;
+    font-size: 14px;
+    line-height: 32px;
+    align-items: center;
+    text-align: right;
+    letter-spacing: 0.75px;
+
+    color: #000000;
+}
+
+.list_ticket button {
+    font-family: 'Mulish', sans-serif;
+    font-style: normal;
+    font-weight: 700;
+    font-size: 14px;
+    line-height: 24px;
+    align-items: center;
+    text-align: center;
+    letter-spacing: 0.75px;
+    color: #F7F7FC;
+    margin: 0px 20px;
+    height: 30px;
+    background: #5F2EEA;
+    box-shadow: 0px 8px 24px rgba(95, 46, 234, 0.24);
+    border-radius: 4px;
+    border: none;
+}
+
+.view-more {
+    margin-top: 30px;
+    padding-left: 10%;
+    padding-right: 10%;
+    height: 50px;
+}
+
+.view-more h2 {
+    width: 100%;
+    text-align: center;
+    border-bottom: 1px solid #DEDEDE;
+    line-height: 0.1em;
+    margin: 10px 0 20px;
+
+}
+
+.view-more a {
+    font-family: 'Mulish', sans-serif;
+    font-style: normal;
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 16px;
+    letter-spacing: 0.75px;
+    color: #5F2EEA;
+}
+
+.view-more h2 span {
+    background: #F5F6F8;
+    padding: 0 20px;
+}
+
+@media screen and (min-width: 1500px) {
+    .list_ticket {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+    }
+
+    .list_ticket .card {
+        margin-left: 5px;
+        margin-right: 5px;
+    }
+}
+
+@media screen and (max-width: 975px) {
+
+    /* HEADER */
+    header .right>a {
+        display: block;
+    }
+
+    header .right .header-bar {
+        display: none;
+    }
+
+    header .right button {
+        display: none;
+    }
+
+    header .right i {
+        display: flex;
+        position: relative;
+        top: 40px;
+        font-size: 1.5em;
+        align-items: right;
+    }
+
+    header .right a {
+        color: #000000;
+    }
+
+    header .right .profile img {
+        display: none;
+    }
+
+    header .right .profile a {
+        display: none;
+    }
+
+    /* NAVBAR */
+    nav {
+        display: none;
+        flex-wrap: wrap;
+        flex-direction: column;
+        align-items: center;
+        width: 100%;
+        height: 100vh;
+        position: absolute;
+        top: 100px;
+        z-index: 2;
+        background-color: rgba(0, 0, 0, 0.5);
+    }
+
+    nav>p {
+        display: block;
+        padding-top: 15px;
+        padding-bottom: 15px;
+        width: 100%;
+        text-align: center;
+        background: #FFF;
+        border-top: 0.5px solid #DEDEDE;
+    }
+
+    nav>div {
+        display: flex;
+        justify-content: space-around;
+        width: 100%;
+        background-color: #FFF;
+    }
+
+    nav>div>div {
+        position: relative;
+        padding-top: 30px;
+        padding-bottom: 15px;
+        background-color: #FFF;
+    }
+
+    nav>div>div input {
+        background: #FFFFFF;
+        height: 50px;
+        width: 600px;
+        border: 1px solid #DEDEDE;
+        border-radius: 4px;
+    }
+
+    nav>div>div input::placeholder {
+        padding-left: 7%;
+        font-size: 16px;
+    }
+
+    nav>div>div i {
+        position: absolute;
+        top: 45px;
+        left: 15px;
+        font-size: 2em;
+        color: #6E7191;
+    }
+
+    nav a {
+        font-family: Mulish, sans-serif;
+        font-style: normal;
+        font-weight: 600;
+        font-size: 16px;
+        line-height: 28px;
+        text-align: center;
+        letter-spacing: 0.75px;
+        color: #14142B;
+    }
+
+    nav .cop {
+        font-family: Mulish, sans-serif;
+        font-style: normal;
+        font-weight: 400;
+        font-size: 13px;
+        line-height: 22px;
+        letter-spacing: 0.75px;
+        color: #6E7191;
+    }
+
+    /* FOOTER */
+    footer {
+        padding-left: 0%;
+        padding-right: 0%;
+        align-items: center;
+    }
+
+    footer .information {
+        justify-content: space-between;
+        max-width: 80%;
+    }
+
+    footer .information .footer-item1 p {
+        margin-top: -20px;
+    }
+
+    /* CONTENT */
+
+    main .content-1 {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .content-1>img {
+        align-self: center;
+        margin-right: 0px;
+    }
+
+    .content-1 .information_movie .title {
+        text-align: center;
+        margin-top: 30px;
+    }
+
+}
+
+@media screen and (max-width: 760px) {
+
+    /* HEADER */
+    header .right>a {
+        display: block;
+    }
+
+    header .right .header-bar {
+        display: none;
+    }
+
+    header .right button {
+        display: none;
+    }
+
+    header .right i {
+        display: flex;
+        position: relative;
+        top: 40px;
+        font-size: 1.5em;
+        align-items: right;
+    }
+
+    header .right a {
+        color: #000000;
+    }
+
+    header .right .profile img {
+        display: none;
+    }
+
+    header .right .profile a {
+        display: none;
+    }
+
+    /* NAVBAR */
+    nav {
+        display: none;
+        flex-wrap: wrap;
+        flex-direction: column;
+        align-items: center;
+        width: 100%;
+        height: 322%;
+        position: absolute;
+        top: 100px;
+        z-index: 2;
+        background-color: rgba(0, 0, 0, 0.5);
+    }
+
+    nav>p {
+        display: block;
+        padding-top: 15px;
+        padding-bottom: 15px;
+        width: 100%;
+        text-align: center;
+        background: #FFF;
+        border-top: 0.5px solid #DEDEDE;
+    }
+
+    nav>div {
+        display: flex;
+        justify-content: space-around;
+        width: 100%;
+        background-color: #FFF;
+    }
+
+    nav>div>div {
+        position: relative;
+        padding-top: 30px;
+        padding-bottom: 15px;
+        background-color: #FFF;
+    }
+
+    nav>div>div input {
+        background: #FFFFFF;
+        height: 50px;
+        width: 300px;
+        border: 1px solid #DEDEDE;
+        border-radius: 4px;
+    }
+
+    nav>div>div input::placeholder {
+        padding-left: 15%;
+        font-size: 16px;
+    }
+
+    nav>div>div i {
+        position: absolute;
+        top: 45px;
+        left: 15px;
+        font-size: 2em;
+        color: #6E7191;
+    }
+
+    nav a {
+        font-family: Mulish, sans-serif;
+        font-style: normal;
+        font-weight: 600;
+        font-size: 16px;
+        line-height: 28px;
+        text-align: center;
+        letter-spacing: 0.75px;
+        color: #14142B;
+    }
+
+    nav .cop {
+        font-family: Mulish, sans-serif;
+        font-style: normal;
+        font-weight: 400;
+        font-size: 13px;
+        line-height: 22px;
+        letter-spacing: 0.75px;
+        color: #6E7191;
+    }
+
+
+    /* FOOTER */
+    footer {
+        padding-left: 0%;
+        padding-right: 0%;
+        align-items: center;
+    }
+
+    footer .information {
+        flex-direction: column;
+    }
+
+    footer .information .title {
+        margin-top: 20px;
+    }
+
+    footer .information .footer-item1 p {
+        margin-top: -20px;
+    }
+
+    footer .information .footer-item2>div {
+        display: flex;
+        flex-direction: row;
+    }
+
+    footer .information .footer-item2 .title {
+        margin-top: -40px;
+    }
+
+    footer .information .footer-item3>div {
+        display: flex;
+        flex-direction: row;
+    }
+
+    footer .information .footer-item4>div a {
+        display: none;
+    }
+
+    footer .information .footer-item4>div i {
+        margin-right: 50px;
+    }
+
+    footer .information .footer-item4>div {
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+    }
+
+    footer .information .footer-item3>div img {
+        margin-right: 20px;
+        max-height: 20px;
+        margin-bottom: 20px;
+    }
+
+    /* CONTENT */
+    main .content-1 {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .content-1>img {
+        height: 300px;
+        align-self: center;
+        margin-right: 0px;
+    }
+
+    .content-1 .information_movie .title {
+        text-align: center;
+        margin-top: 30px;
+    }
+
+    .content-1 .information_movie .title h1 {
+        font-size: 25px;
+    }
+
+    .content-1 .information_movie .title p {
+        font-size: 16px;
+    }
+
+    .content-1 .information_movie .information_details {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .content-1 .information_movie .information_details .left {
+        grid-column: 1;
+    }
+
+    .content-1 .information_movie .information_details .right {
+        grid-column: 2;
+    }
+
+    .content-2 .search>div {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .content-2 .search>div .date {
+        margin-right: 0px;
+        margin-bottom: 10px;
+    }
+
+    .list_ticket {
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+    }
+}
+
+@media screen and (max-width: 550px) {
+
+    /* HEADER */
+    header .right>a {
+        display: block;
+    }
+
+    header .right .header-bar {
+        display: none;
+    }
+
+    header .right button {
+        display: none;
+    }
+
+    header .right i {
+        display: flex;
+        position: relative;
+        top: 40px;
+        font-size: 1.5em;
+        align-items: right;
+    }
+
+    header .right a {
+        color: #000000;
+    }
+
+    header .right .profile img {
+        display: none;
+    }
+
+    header .right .profile a {
+        display: none;
+    }
+
+    /* NAVBAR */
+    nav {
+        display: none;
+        flex-wrap: wrap;
+        flex-direction: column;
+        align-items: center;
+        width: 100%;
+        height: 322%;
+        position: absolute;
+        top: 100px;
+        z-index: 2;
+        background-color: rgba(0, 0, 0, 0.5);
+    }
+
+    nav>p {
+        display: block;
+        padding-top: 15px;
+        padding-bottom: 15px;
+        width: 100%;
+        text-align: center;
+        background: #FFF;
+        border-top: 0.5px solid #DEDEDE;
+    }
+
+    nav>div {
+        display: flex;
+        justify-content: space-around;
+        width: 100%;
+        background-color: #FFF;
+    }
+
+    nav>div>div {
+        position: relative;
+        padding-top: 30px;
+        padding-bottom: 15px;
+        background-color: #FFF;
+    }
+
+    nav>div>div input {
+        background: #FFFFFF;
+        height: 50px;
+        width: 300px;
+        border: 1px solid #DEDEDE;
+        border-radius: 4px;
+    }
+
+    nav>div>div input::placeholder {
+        padding-left: 15%;
+        font-size: 16px;
+    }
+
+    nav>div>div i {
+        position: absolute;
+        top: 45px;
+        left: 15px;
+        font-size: 2em;
+        color: #6E7191;
+    }
+
+    nav a {
+        font-family: Mulish, sans-serif;
+        font-style: normal;
+        font-weight: 600;
+        font-size: 16px;
+        line-height: 28px;
+        text-align: center;
+        letter-spacing: 0.75px;
+        color: #14142B;
+    }
+
+    nav .cop {
+        font-family: Mulish, sans-serif;
+        font-style: normal;
+        font-weight: 400;
+        font-size: 13px;
+        line-height: 22px;
+        letter-spacing: 0.75px;
+        color: #6E7191;
+    }
+
+
+    /* FOOTER */
+    footer {
+        padding-left: 0%;
+        padding-right: 0%;
+        align-items: center;
+    }
+
+    footer .information {
+        flex-direction: column;
+    }
+
+    footer .information .title {
+        margin-top: 20px;
+    }
+
+    footer .information .footer-item1 p {
+        margin-top: -20px;
+    }
+
+    footer .information .footer-item2>div {
+        display: flex;
+        flex-direction: row;
+    }
+
+    footer .information .footer-item2 .title {
+        margin-top: -40px;
+    }
+
+    footer .information .footer-item3>div {
+        display: flex;
+        flex-direction: row;
+    }
+
+    footer .information .footer-item4>div a {
+        display: none;
+    }
+
+    footer .information .footer-item4>div i {
+        margin-right: 50px;
+    }
+
+    footer .information .footer-item4>div {
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+    }
+
+    footer .information .footer-item3>div img {
+        margin-right: 20px;
+        max-height: 20px;
+        margin-bottom: 20px;
+    }
+
+    /* CONTENT */
+    main .content-1 {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .content-1>img {
+        height: 300px;
+        align-self: center;
+        margin-right: 0px;
+    }
+
+    .content-1 .information_movie .title {
+        text-align: center;
+        margin-top: 30px;
+    }
+
+    .content-1 .information_movie .title h1 {
+        font-size: 25px;
+    }
+
+    .content-1 .information_movie .title p {
+        font-size: 16px;
+    }
+
+    .content-1 .information_movie .information_details {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .content-1 .information_movie .information_details .left {
+        grid-column: 1;
+    }
+
+    .content-1 .information_movie .information_details .right {
+        grid-column: 2;
+    }
+
+    .content-2 .search>div {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .content-2 .search>div .date {
+        margin-right: 0px;
+        margin-bottom: 10px;
+    }
+
+    .list_ticket {
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+    }
+
+    .list_ticket .t3,
+    .list_ticket .t4,
+    .list_ticket .t5,
+    .list_ticket .t6 {
+        display: none;
+    }
+}

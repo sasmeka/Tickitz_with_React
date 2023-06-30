@@ -1,14 +1,22 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import logo_2 from '../assets/img/logo2.png'
 import profile from '../assets/img/profile.png'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 
 function Header() {
+    const navigates = useNavigate();
     const [icon_search, seticon_search] = useState(true)
     const [header_search, setheader_search] = useState(true)
     const [menu_desktop, setmenu_desktop] = useState(true)
     const [menu_mobile, setmenu_mobile] = useState(true)
     const [modal_logout, setmodal_logout] = useState(true)
+
+    const logout = () => {
+        sessionStorage.clear()
+        localStorage.removeItem('Token')
+        localStorage.removeItem('Users')
+        navigates(`/sign-in`)
+    }
 
     const show_header_search = () => {
         seticon_search(false)
@@ -58,9 +66,10 @@ function Header() {
                 </Link>
                 <Link className="block lg:hidden" onClick={click_menu_mobile}><i className="fa fa-bars" style={{ maxWidth: '200px' }} aria-hidden="true" /></Link>
             </div>
-            <div className={menu_desktop ? "hidden" : "hidden lg:grid absolute bg-white rounded shadow-md p-3 right-24 top-[4.5rem]"}>
-                <Link className="tracking-wide font-normal hover:font-bold" to="/#">Profile</Link>
-                <p><Link className="tracking-wide font-normal hover:font-bold" to="/#" onClick={show_modal_logout}>Logout</Link>
+            <div className={menu_desktop ? "hidden" : "hidden lg:grid absolute bg-white rounded shadow-md right-24 top-[4.5rem]"}>
+                <p className="px-3 tracking-wide font-normal border-b">{JSON.parse(localStorage.getItem('Users')).first_name + ' ' + JSON.parse(localStorage.getItem('Users')).last_name}</p>
+                <Link className="px-3 tracking-wide font-normal hover:font-bold" to="/#">Profile</Link>
+                <p><Link className="px-3 tracking-wide font-normal hover:font-bold" to="/#" onClick={show_modal_logout}>Logout</Link>
                 </p>
             </div>
             <div className={modal_logout ? "hidden" : "block absolute h-screen w-full top-0 left-0 bg-black bg-opacity-50 text-center grid items-center justify-around"}>
@@ -73,8 +82,8 @@ function Header() {
                         <p>Are you sure you want to logout?</p>
                     </div>
                     <div className="flex pt-2 border-t justify-between items-center">
-                        <Link to="/logout"><button className="bg-[#dc2626] h-8 w-20 rounded-lg text-white font-bold text-sm">Log
-                            Out</button></Link>
+                        <button onClick={logout} className="bg-[#dc2626] h-8 w-20 rounded-lg text-white font-bold text-sm">Log
+                            Out</button>
                     </div>
                 </div>
             </div>
@@ -85,10 +94,10 @@ function Header() {
                         <input type="text" className="h-10 w-full border rounded placeholder: pl-10" placeholder="Search..." />
                     </div>
                 </div>
-                <p className="bg-white border-t border-b py-3 tracking-wide text-sm md:text-base hover:font-bold"><Link to="/home.html" onClick={click_menu_mobile}>Home</Link></p>
-                <p className="bg-white border-b py-3 tracking-wide text-sm md:text-base hover:font-bold"><Link to="/list_movie.html" onClick={click_menu_mobile}>List
+                <p className="bg-white border-t border-b py-3 tracking-wide text-sm md:text-base hover:font-bold"><Link to="/">Home</Link></p>
+                <p className="bg-white border-b py-3 tracking-wide text-sm md:text-base hover:font-bold"><Link to="/#">List
                     Movie</Link></p>
-                <p className="bg-white border-b py-3 tracking-wide text-sm md:text-base hover:font-bold"><Link to="/profile.html" onClick={click_menu_mobile}>Profile</Link></p>
+                <p className="bg-white border-b py-3 tracking-wide text-sm md:text-base hover:font-bold"><Link to="/#" >Profile</Link></p>
                 <p className="bg-white border-b py-3 tracking-wide text-sm md:text-base hover:font-bold"><Link to="/#" onClick={show_modal_logout}>Logout</Link></p>
                 <p onClick={click_menu_mobile} className="bg-white border-b py-3 tracking-wide text-xs md:text-sm">©
                     2020 Tickitz.

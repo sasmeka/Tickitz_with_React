@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import logo_2 from '../assets/img/logo2.png'
 import ebu from '../assets/img/ebu.id-logo.png'
 import cine from '../assets/img/cineone21-logo.png'

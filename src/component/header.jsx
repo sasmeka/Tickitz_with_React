@@ -53,7 +53,10 @@ function Header() {
                 <Link className="hidden lg:block px-7 text-[#414141] text-base font-normal hover:font-bold tracking-wide" to="/list_movie.html">List
                     Movie</Link>
             </nav>
-            <div className="flex items-center">
+            <div className={localStorage.getItem('Users') ? "hidden" : "block"}>
+                <button onClick={() => { navigates(`/sign-in`) }} className="mt-2 h-6 w-16 md:h-8 md:w-20 bg-[#5F2EEA] rounded-md text-[10px] md:text-[12px] tracking-wide text-white">Sign Up</button>
+            </div>
+            <div className={localStorage.getItem('Users') ? "flex items-center" : "hidden"}>
                 <Link to="/#" onClick={show_header_search} className={icon_search ? 'hidden lg:block pe-8' : 'hidden'}>
                     <i className="fa fa-search text-[#414141]" aria-hidden="true" />
                 </Link>
@@ -67,7 +70,7 @@ function Header() {
                 <Link className="block lg:hidden" onClick={click_menu_mobile}><i className="fa fa-bars" style={{ maxWidth: '200px' }} aria-hidden="true" /></Link>
             </div>
             <div className={menu_desktop ? "hidden" : "hidden lg:grid absolute bg-white rounded shadow-md right-24 top-[4.5rem]"}>
-                <p className="px-3 tracking-wide font-normal border-b">{JSON.parse(localStorage.getItem('Users')).first_name + ' ' + JSON.parse(localStorage.getItem('Users')).last_name}</p>
+                <p className="px-3 tracking-wide font-normal border-b">{localStorage.getItem('Users') ? JSON.parse(localStorage.getItem('Users')).first_name + ' ' + JSON.parse(localStorage.getItem('Users')).last_name : 'Guest'}</p>
                 <Link className="px-3 tracking-wide font-normal hover:font-bold" to="/#">Profile</Link>
                 <p><Link className="px-3 tracking-wide font-normal hover:font-bold" to="/#" onClick={show_modal_logout}>Logout</Link>
                 </p>

@@ -13,6 +13,7 @@ function Sign_up() {
     const [email, setemail] = useState('')
     const [password, setpassword] = useState('')
     const [errors, seterrors] = useState([])
+    const [cpass, setcpass] = useState(true)
 
     const Register = async (e) => {
         e.preventDefault()
@@ -30,7 +31,9 @@ function Sign_up() {
             seterrors(error.response.data)
         }
     }
-
+    const click_pass = () => {
+        setcpass(cpass == true ? false : true)
+    }
     useEffect(() => {
         document.title = 'Sign Up';
     }, []);
@@ -63,8 +66,8 @@ function Sign_up() {
                         <div className="flex flex-col mb-5">
                             <label className="mb-3 text-sm md:text-md text-[#4E4B66]">Password</label>
                             <div className="relative w-full items-center">
-                                <input type="password" onChange={(e) => setpassword(e.target.value)} className="h-10 md:h-12 w-full border border-[#DEDEDE] rounded-xl pl-5 placeholder:text-[#A0A3BD] placeholder:tracking-wider" placeholder="Write your password" />
-                                <i className="fa fa-eye absolute top-3 md:top-[1rem] right-3 text-[#A0A3BD]" aria-hidden="true"></i>
+                                <input type={cpass ? "password" : "text"} onChange={(e) => setpassword(e.target.value)} className="h-10 md:h-12 w-full border border-[#DEDEDE] rounded-xl pl-5 placeholder:text-[#A0A3BD] placeholder:tracking-wider" placeholder="Write your password" />
+                                <Link onClick={click_pass}><i className="fa fa-eye absolute top-3 md:top-[1rem] right-3 text-[#A0A3BD]" aria-hidden="true"></i></Link>
                             </div>
                         </div>
                         <button type="submit" className="mt-5 h-10 md:h-12 w-full bg-[#5F2EEA] rounded-xl text-white font-semibold tracking-wider">Sign Up</button>

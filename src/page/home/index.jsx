@@ -5,9 +5,10 @@ import home1 from '../../assets/img/home1.png'
 import home2 from '../../assets/img/home2.png'
 import home3 from '../../assets/img/home3.png'
 import axios from 'axios'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 
 function Home() {
+    const navigate = useNavigate()
     const [ismovieHovering, setIsmovieHovering] = useState('');
     const [hovimg, sethovimg] = useState('');
     const [nowshow, setnowshow] = useState([]);
@@ -33,7 +34,8 @@ function Home() {
             const { data } = await axios.get(`http://localhost:8000/movie?limit=6&order_by=release_date&month_release=${pickmonth}`)
             setmovies(data.data)
         } catch (error) {
-            console.log(error)
+            setmovies(false)
+            console.log(error.response.data)
         }
     }
 
@@ -42,14 +44,15 @@ function Home() {
             const { data } = await axios.get(`http://localhost:8000/movie?limit=8&order_by=release_date`)
             setnowshow(data.data)
         } catch (error) {
-            console.log(error)
+            setnowshow(false)
+            console.log(error.response.data)
         }
     }
 
-    function capitalTitle(str) {
-        return (str.replace(/\w\S*/g, function (kata) {
-            const kataBaru = kata.slice(0, 1).toUpperCase() + kata.substr(1);
-            return kataBaru
+    function capitalTitle(text) {
+        return (text.replace(/\w\S*/g, function (word) {
+            const newWord = word.slice(0, 1).toUpperCase() + word.substr(1);
+            return newWord
         }))
     }
 
@@ -94,7 +97,7 @@ function Home() {
                                                     <div className="bg-white mt-3 text-center">
                                                         <h5 className="h-5 mb-2 grid items-center text-sm font-semibold tracking-wider">{capitalTitle(v.title.slice(0, 9) + (v.title.split('').length > 9 ? ' ...' : ''))}</h5>
                                                         <p className="text-[9px]">{v.movie_id_genre ? (v.movie_id_genre.map(u => u.name_genre).join(', ')).slice(0, 20) + ' ...' : ""}</p>
-                                                        <button onMouseOut={() => [setIsmovieHovering(''), sethovimg('')]} className="h-5 rounded text-[#5F2EEA] text-[8px] border border-[#5F2EEA] font-semibold w-4/5 hover:bg-[#5F2EEA] hover:text-white mt-3">Details</button>
+                                                        <button onMouseOut={() => [setIsmovieHovering(''), sethovimg('')]} onClick={() => navigate(`/detail_movie/${v.id_movie}`)} className="h-5 rounded text-[#5F2EEA] text-[8px] border border-[#5F2EEA] font-semibold w-4/5 hover:bg-[#5F2EEA] hover:text-white mt-3">Details</button>
                                                     </div>
                                                 ) : ''
                                             }
@@ -139,7 +142,7 @@ function Home() {
                                                 <p className="my-1 text-[10px] text-[#A0A3BD]">{
                                                     v.movie_id_genre ? (v.movie_id_genre.map(u => u.name_genre).join(', ')).slice(0, 20) + ' ...' : ""
                                                 }</p>
-                                                <button className="mt-3 h-7 w-9/12 rounded border border-[#5F2EEA] text-[#5F2EEA] text-sm font-semibold leading-none hover:bg-[#5F2EEA] active:bg-[#3604c3] hover:text-white">Details</button>
+                                                <button onClick={() => navigate(`/detail_movie/${v.id_movie}`)} className="mt-3 h-7 w-9/12 rounded border border-[#5F2EEA] text-[#5F2EEA] text-sm font-semibold leading-none hover:bg-[#5F2EEA] active:bg-[#3604c3] hover:text-white">Details</button>
                                             </div>
                                         </div>
                                     )

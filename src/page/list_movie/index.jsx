@@ -3,9 +3,10 @@ import Header from "../../component/header";
 import Pagination from "../../component/pagination"
 import Footer from "../../component/footer";
 import axios from 'axios'
-import { Link } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 
-function Home() {
+function List_Movie() {
+    const navigate = useNavigate()
     const [movies, setmovies] = useState([]);
     const [metamovies, setmetamovies] = useState([]);
     const [pageactive, setpageactive] = useState(1)
@@ -17,7 +18,9 @@ function Home() {
             setmovies(data.data)
             setmetamovies(data.meta)
         } catch (error) {
-            console.log(error)
+            setmovies(false)
+            setmetamovies(false)
+            console.log(error.response.data)
         }
     }
 
@@ -45,10 +48,10 @@ function Home() {
         }
     }
 
-    function capitalTitle(str) {
-        return (str.replace(/\w\S*/g, function (kata) {
-            const kataBaru = kata.slice(0, 1).toUpperCase() + kata.substr(1);
-            return kataBaru
+    function capitalTitle(text) {
+        return (text.replace(/\w\S*/g, function (word) {
+            const newWord = word.slice(0, 1).toUpperCase() + word.substr(1);
+            return newWord
         }))
     }
 
@@ -109,7 +112,7 @@ function Home() {
                                         <div className="md:mt-3">
                                             <h5 className="tracking-wide text-base font-semibold">{capitalTitle(v.title.slice(0, 9) + (v.title.split('').length > 9 ? ' ...' : ''))}</h5>
                                             <p className="my-1 text-[10px] text-[#A0A3BD]">{v.movie_id_genre ? (v.movie_id_genre.map(u => u.name_genre).join(', ')).slice(0, 20) + ' ...' : ""}</p>
-                                            <button className="mt-3 h-7 w-9/12 rounded border border-[#5F2EEA] text-[#5F2EEA] text-sm font-semibold leading-none hover:bg-[#5F2EEA] active:bg-[#3604c3] hover:text-white">Details</button>
+                                            <button onClick={() => navigate(`/detail_movie/${v.id_movie}`)} className="mt-3 h-7 w-9/12 rounded border border-[#5F2EEA] text-[#5F2EEA] text-sm font-semibold leading-none hover:bg-[#5F2EEA] active:bg-[#3604c3] hover:text-white">Details</button>
                                         </div>
                                     </div>
                                 )
@@ -130,4 +133,4 @@ function Home() {
     )
 }
 
-export default Home
+export default List_Movie

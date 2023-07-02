@@ -6,6 +6,7 @@ import Sign_in from "./page/sign_in";
 import Sign_up from "./page/sign_up";
 import Verification from "./page/verification";
 import List_movie from './page/list_movie';
+import Detail_movie from './page/detail_movie'
 
 function router() {
     return (
@@ -16,6 +17,7 @@ function router() {
                 <Route path="/" element={<Home />} />
                 <Route path="/verification" element={<Verification />} />
                 <Route path="/list_movie" element={<List_movie />} />
+                <Route path="/detail_movie/:id" element={<Detail_movie />} />
             </Routes>
         </BrowserRouter>
     )

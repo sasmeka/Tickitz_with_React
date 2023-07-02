@@ -18,6 +18,13 @@ function Header() {
         navigates(`/sign-in`)
     }
 
+    function capital(str) {
+        return (str.replace(/\w\S*/g, function (kata) {
+            const kataBaru = kata.slice(0, 1).toUpperCase() + kata.substr(1);
+            return kataBaru
+        }))
+    }
+
     const show_header_search = () => {
         seticon_search(false)
         setheader_search(false)
@@ -49,9 +56,21 @@ function Header() {
         <header className="sticky top-0 px-5 md:px-20 relative flex justify-between py-4 bg-white z-10 md:shadow-sm">
             <nav className="flex items-center">
                 <img className="h-8 md:h-10 lg:h-14 pe-10" src={logo_2} alt="" />
-                <Link className="hidden lg:block text-[#414141] text-base font-normal hover:font-bold tracking-wide" to="/home.html">Home</Link>
-                <Link className="hidden lg:block px-7 text-[#414141] text-base font-normal hover:font-bold tracking-wide" to="/list_movie.html">List
-                    Movie</Link>
+                {
+                    localStorage.getItem('Users') && JSON.parse(localStorage.getItem('Users')).role == 'admin' ? (
+                        <>
+                            <Link className="hidden lg:block text-[#414141] text-base font-normal hover:font-bold tracking-wide" to="/">Dashboard</Link>
+                            <Link className="hidden lg:block pl-7 text-[#414141] text-base font-normal hover:font-bold tracking-wide" to="/manage_movie">Manage Movie</Link>
+                            <Link className="hidden lg:block pl-7 text-[#414141] text-base font-normal hover:font-bold tracking-wide" to="/manage_schedule">Manage Schedule</Link>
+                        </>
+                    ) : (
+                        <>
+                            <Link className="hidden lg:block text-[#414141] text-base font-normal hover:font-bold tracking-wide" to="/">Home</Link>
+                            <Link className="hidden lg:block pl-7 text-[#414141] text-base font-normal hover:font-bold tracking-wide" to="/list_movie">List
+                                Movie</Link>
+                        </>
+                    )
+                }
             </nav>
             <div className={localStorage.getItem('Users') ? "hidden" : "block"}>
                 <button onClick={() => { navigates(`/sign-in`) }} className="mt-2 h-6 w-16 md:h-8 md:w-20 bg-[#5F2EEA] rounded-md text-[10px] md:text-[12px] tracking-wide text-white">Sign Up</button>
@@ -70,7 +89,7 @@ function Header() {
                 <Link className="block lg:hidden" onClick={click_menu_mobile}><i className="fa fa-bars" style={{ maxWidth: '200px' }} aria-hidden="true" /></Link>
             </div>
             <div className={menu_desktop ? "hidden" : "hidden lg:grid absolute bg-white rounded shadow-md right-24 top-[4.5rem]"}>
-                <p className="px-3 tracking-wide font-normal border-b">{localStorage.getItem('Users') ? JSON.parse(localStorage.getItem('Users')).first_name + ' ' + JSON.parse(localStorage.getItem('Users')).last_name : 'Guest'}</p>
+                <p className="px-3 py-2 tracking-wide font-normal border-b">{localStorage.getItem('Users') ? capital(JSON.parse(localStorage.getItem('Users')).first_name + ' ' + JSON.parse(localStorage.getItem('Users')).last_name) : 'Guest'}</p>
                 <Link className="px-3 tracking-wide font-normal hover:font-bold" to="/#">Profile</Link>
                 <p><Link className="px-3 tracking-wide font-normal hover:font-bold" to="/#" onClick={show_modal_logout}>Logout</Link>
                 </p>
@@ -97,9 +116,21 @@ function Header() {
                         <input type="text" className="h-10 w-full border rounded placeholder: pl-10" placeholder="Search..." />
                     </div>
                 </div>
-                <p className="bg-white border-t border-b py-3 tracking-wide text-sm md:text-base hover:font-bold"><Link to="/">Home</Link></p>
-                <p className="bg-white border-b py-3 tracking-wide text-sm md:text-base hover:font-bold"><Link to="/#">List
-                    Movie</Link></p>
+                {
+                    localStorage.getItem('Users') && JSON.parse(localStorage.getItem('Users')).role == 'admin' ? (
+                        <>
+                            <p className="bg-white border-t border-b py-3 tracking-wide text-sm md:text-base hover:font-bold"><Link to="/dashboard">Dashboard</Link></p>
+                            <p className="bg-white border-b py-3 tracking-wide text-sm md:text-base hover:font-bold"><Link to="/manage_movie">Manage Movie</Link></p>
+                            <p className="bg-white border-b py-3 tracking-wide text-sm md:text-base hover:font-bold"><Link to="/manage_schedule">Manage Schedule</Link></p>
+                        </>
+                    ) : (
+                        <>
+                            <p className="bg-white border-t border-b py-3 tracking-wide text-sm md:text-base hover:font-bold"><Link to="/">Home</Link></p>
+                            <p className="bg-white border-b py-3 tracking-wide text-sm md:text-base hover:font-bold"><Link to="/#">List
+                                Movie</Link></p>
+                        </>
+                    )
+                }
                 <p className="bg-white border-b py-3 tracking-wide text-sm md:text-base hover:font-bold"><Link to="/#" >Profile</Link></p>
                 <p className="bg-white border-b py-3 tracking-wide text-sm md:text-base hover:font-bold"><Link to="/#" onClick={show_modal_logout}>Logout</Link></p>
                 <p onClick={click_menu_mobile} className="bg-white border-b py-3 tracking-wide text-xs md:text-sm">©

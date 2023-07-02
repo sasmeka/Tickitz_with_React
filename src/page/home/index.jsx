@@ -30,7 +30,7 @@ function Home() {
 
     const getMovies = async () => {
         try {
-            const { data } = await axios.get(`http://localhost:8000/movie?limit=3&order_by=release_date&month_release=${pickmonth}`)
+            const { data } = await axios.get(`http://localhost:8000/movie?limit=6&order_by=release_date&month_release=${pickmonth}`)
             setmovies(data.data)
         } catch (error) {
             console.log(error)
@@ -44,6 +44,13 @@ function Home() {
         } catch (error) {
             console.log(error)
         }
+    }
+
+    function capitalTitle(str) {
+        return (str.replace(/\w\S*/g, function (kata) {
+            const kataBaru = kata.slice(0, 1).toUpperCase() + kata.substr(1);
+            return kataBaru
+        }))
     }
 
     useEffect(() => {
@@ -80,12 +87,12 @@ function Home() {
                             nowshow ? (
                                 nowshow.map((v) => {
                                     return (
-                                        <div className={"w-36 " + (hovimg === v ? 'h-full bg-white shadow-lg' : 'h-4/6') + " mx-5 px-5 pt-5 pb-5 border border-white rounded-lg"} >
+                                        <div className={"w-36 " + (hovimg === v ? 'h-full bg-white shadow-lg' : 'h-4/6') + " mx-5 px-5 pt-5 pb-5 border border-white border-2 rounded-lg"} >
                                             <img onClick={() => [ismovieHovering === v ? setIsmovieHovering(0) : setIsmovieHovering(v), hovimg === v ? sethovimg(0) : sethovimg(v)]} onMouseOver={() => [setIsmovieHovering(v), sethovimg(v)]} className={"rounded-lg " + (hovimg === v ? 'h-4/6' : 'h-full') + " w-full object-cover"} src={window.env.API_URL + v.image} alt="" />
                                             {
                                                 ismovieHovering === v && hovimg === v ? (
                                                     <div className="bg-white mt-3 text-center">
-                                                        <h5 className="h-5 mb-2 grid items-center text-sm font-semibold tracking-wider">{v.title.slice(0, 9) + (v.title.split('').length > 9 ? ' ...' : '')}</h5>
+                                                        <h5 className="h-5 mb-2 grid items-center text-sm font-semibold tracking-wider">{capitalTitle(v.title.slice(0, 9) + (v.title.split('').length > 9 ? ' ...' : ''))}</h5>
                                                         <p className="text-[9px]">{v.movie_id_genre ? (v.movie_id_genre.map(u => u.name_genre).join(', ')).slice(0, 20) + ' ...' : ""}</p>
                                                         <button onMouseOut={() => [setIsmovieHovering(''), sethovimg('')]} className="h-5 rounded text-[#5F2EEA] text-[8px] border border-[#5F2EEA] font-semibold w-4/5 hover:bg-[#5F2EEA] hover:text-white mt-3">Details</button>
                                                     </div>
@@ -111,7 +118,7 @@ function Home() {
                                 month.map((v) => {
                                     return (
                                         <div className="mr-8">
-                                            <button onClick={() => setpickmonth(v.id)} className="h-8 w-32 rounded border border-[#5F2EEA] p-2 text-[#5F2EEA] text-sm font-semibold leading-none hover:bg-[#5F2EEA] active:bg-[#3604c3] hover:text-white">{v.name}</button>
+                                            <button onClick={() => (pickmonth == v.id ? setpickmonth('') : setpickmonth(v.id))} className={(pickmonth == v.id ? 'bg-[#5F2EEA] text-white' : 'text-[#5F2EEA]') + " h-8 w-32 rounded border border-[#5F2EEA] p-2 text-sm font-semibold leading-none hover:bg-[#5F2EEA] active:bg-[#3604c3] hover:text-white"}>{v.name}</button>
                                         </div>
                                     )
                                 })
@@ -125,14 +132,14 @@ function Home() {
                             movies ? (
                                 movies.map((v) => {
                                     return (
-                                        <div className="w-36 h-full mx-5 px-5 pt-5 pb-32 border rounded-lg" >
+                                        <div className="w-36 h-full mx-5 px-5 pt-5 pb-32 border border-[#DEDEDE] rounded-lg" >
                                             <img className="rounded-lg h-full w-full object-cover" src={window.env.API_URL + v.image} alt="" />
                                             <div className="bg-white mt-3 text-center">
-                                                <h5 className="h-10 mb-2 grid items-center text-sm font-semibold tracking-wider">{v.title.slice(0, 9) + (v.title.split('').length > 9 ? ' ...' : '')}</h5>
-                                                <p className="text-[9px]">{
+                                                <h5 className="tracking-wide text-sm font-semibold">{capitalTitle(v.title.slice(0, 9) + (v.title.split('').length > 9 ? ' ...' : ''))}</h5>
+                                                <p className="my-1 text-[10px] text-[#A0A3BD]">{
                                                     v.movie_id_genre ? (v.movie_id_genre.map(u => u.name_genre).join(', ')).slice(0, 20) + ' ...' : ""
                                                 }</p>
-                                                <button className="h-5 rounded text-[#5F2EEA] text-[8px] border border-[#5F2EEA] font-semibold w-4/5 hover:bg-[#5F2EEA] hover:text-white my-3">Details</button>
+                                                <button className="mt-3 h-7 w-9/12 rounded border border-[#5F2EEA] text-[#5F2EEA] text-sm font-semibold leading-none hover:bg-[#5F2EEA] active:bg-[#3604c3] hover:text-white">Details</button>
                                             </div>
                                         </div>
                                     )

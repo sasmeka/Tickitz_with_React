@@ -18,7 +18,7 @@ function Footer() {
                     <p className="text-base font-bold mb-2 md:mb-5 mt-9 md:mt-0">Explore</p>
                     <div className="flex flex-row md:flex-col">
                         <p className="my-1 text-[#4E4B66] text-sm tracking-wide me-4 md:me-0"><Link to="/">Home</Link></p>
-                        <p className="my-1 text-[#4E4B66] text-sm tracking-wide"><Link to='/#'>List Movie</Link></p>
+                        <p className="my-1 text-[#4E4B66] text-sm tracking-wide"><Link to='/list_movie'>List Movie</Link></p>
                     </div>
                 </div>
                 <div>

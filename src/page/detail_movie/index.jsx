@@ -24,7 +24,7 @@ function Detail_Movie() {
 
     const getMovie = async () => {
         try {
-            const { data } = await axios.get(`http://localhost:8000/movie/${params.id}`)
+            const { data } = await axios.get(window.env.API_URL + `movie/${params.id}`)
             setmovie(data.data)
             setmetamovie(data.meta)
         } catch (error) {
@@ -34,7 +34,7 @@ function Detail_Movie() {
     }
     const getSchedule = async () => {
         try {
-            const { data } = await axios.get(`http://localhost:8000/schedule?id_regency=${pickloc}&limit=${incrementlimit}&page=1&id_movie=${params.id}`)
+            const { data } = await axios.get(window.env.API_URL + `schedule?id_regency=${pickloc}&limit=${incrementlimit}&page=1&id_movie=${params.id}`)
             setschedule(data.data)
             setmetaschedule(data.meta)
         } catch (error) {
@@ -44,7 +44,7 @@ function Detail_Movie() {
     }
     const getRegency = async () => {
         try {
-            const { data } = await axios.get(`http://localhost:8000/regency`)
+            const { data } = await axios.get(window.env.API_URL + `regency`)
             setregency(data.data)
             setmetaregency(data.meta)
         } catch (error) {
@@ -64,7 +64,6 @@ function Detail_Movie() {
     const changeLoc = (v) => {
         if (v.target.value !== 'all') {
             setpickloc(v.target.value)
-            console.log(v.target.value)
         } else {
             setpickloc('')
         }
@@ -88,7 +87,7 @@ function Detail_Movie() {
                     {
                         movie.map((v) => (
                             <>
-                                <div className="md:col-span-2 lg:col-span-1 flex justify-around">
+                                <div key={v.id_movie} className="md:col-span-2 lg:col-span-1 flex justify-around">
                                     <div className="w-48 md:h-80 md:w-56 lg:h-[300px] lg:w-48 m-5 md:m-0 p-5 md:p-5 border rounded-xl">
                                         <img className="h-full object-cover rounded-xl" src={window.env.API_URL + v.image} alt="" />
                                     </div>
@@ -144,7 +143,7 @@ function Detail_Movie() {
                                     <option className="text-sm" value='all' selected>All</option>
                                     {
                                         regency ? regency.map((v) => (
-                                            <option value={v.id_regency}>{v.name_regency}</option>
+                                            <option key={v.id_regecy} value={v.id_regency}>{v.name_regency}</option>
                                         )) : ("")
                                     }
                                 </select>
@@ -156,7 +155,7 @@ function Detail_Movie() {
                         {
                             schedule ? (
                                 schedule.map((v) => (
-                                    <div className="bg-white rounded-xl p-3 shadow-md">
+                                    <div key={v.id_schedule} className="bg-white rounded-xl p-3 shadow-md">
                                         <div className="grid grid-cols-3 items-center pb-5 gap-5">
                                             <div className="flex justify-around">
                                                 <div className="w-4/5">
@@ -171,7 +170,7 @@ function Detail_Movie() {
                                         <div className="grid grid-cols-4 items-center text-center gap-2">
                                             {
                                                 v.times.map(p => (
-                                                    <Link onClick={() => setpicktime(p.id_time_schedule)} className={"text-[10px] text-[#4E4B66] tracking-wider " + (picktime == p.id_time_schedule ? 'font-bold' : '')}>{p.time_schedule.substring(0, 5)} WIB</Link>
+                                                    <Link key={v.id_time_schedule} onClick={() => setpicktime(p.id_time_schedule)} className={"text-[10px] text-[#4E4B66] tracking-wider " + (picktime == p.id_time_schedule ? 'font-bold' : '')}>{p.time_schedule.substring(0, 5)} WIB</Link>
                                                 ))
                                             }
                                         </div>
@@ -193,8 +192,8 @@ function Detail_Movie() {
                     </div>
                 </section>
                 <section className="mb-10 px-5 md:px-20">
-                    <h1 class="border-b leading-[0.1rem] border-[#DEDEDE] text-center">
-                        <span class="bg-[#FCFCFC] text-center"><Link onClick={() => setincrementlimit(incrementlimit + 3)} class="p-5 text-[#5F2EEA] font-semibold text-md">view more</Link></span>
+                    <h1 className="border-b leading-[0.1rem] border-[#DEDEDE] text-center">
+                        <span className="bg-[#FCFCFC] text-center"><Link onClick={() => setincrementlimit(incrementlimit + 3)} className="p-5 text-[#5F2EEA] font-semibold text-md">view more</Link></span>
                     </h1>
                 </section>
             </main>

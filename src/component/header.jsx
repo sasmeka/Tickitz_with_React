@@ -91,14 +91,14 @@ function Header() {
             <div className={menu_desktop ? "hidden" : "hidden lg:grid absolute bg-white rounded shadow-md right-24 top-[4.5rem]"}>
                 <p className="px-3 py-2 tracking-wide font-normal border-b">{localStorage.getItem('Users') ? capital(JSON.parse(localStorage.getItem('Users')).first_name + ' ' + JSON.parse(localStorage.getItem('Users')).last_name) : 'Guest'}</p>
                 <Link className="px-3 tracking-wide font-normal hover:font-bold" to="/#">Profile</Link>
-                <p><Link className="px-3 tracking-wide font-normal hover:font-bold" to="/#" onClick={show_modal_logout}>Logout</Link>
+                <p><Link className="px-3 tracking-wide font-normal hover:font-bold" onClick={show_modal_logout}>Logout</Link>
                 </p>
             </div>
             <div className={modal_logout ? "hidden" : "block absolute h-screen w-full top-0 left-0 bg-black bg-opacity-50 text-center grid items-center justify-around"}>
                 <div className="bg-white p-5 rounded-lg">
                     <div className="flex pb-2 border-b justify-between items-center">
                         <h1 className="tracking-wider font-bold">Logout</h1>
-                        <Link to="/#" onClick={hidden_modal_logout}><i className="fa fa-times" aria-hidden="true" /></Link>
+                        <Link onClick={hidden_modal_logout}><i className="fa fa-times" aria-hidden="true" /></Link>
                     </div>
                     <div className="py-5">
                         <p>Are you sure you want to logout?</p>
@@ -132,7 +132,7 @@ function Header() {
                     )
                 }
                 <p className="bg-white border-b py-3 tracking-wide text-sm md:text-base hover:font-bold"><Link to="/#" >Profile</Link></p>
-                <p className="bg-white border-b py-3 tracking-wide text-sm md:text-base hover:font-bold"><Link to="/#" onClick={show_modal_logout}>Logout</Link></p>
+                <p className="bg-white border-b py-3 tracking-wide text-sm md:text-base hover:font-bold"><Link onClick={show_modal_logout}>Logout</Link></p>
                 <p onClick={click_menu_mobile} className="bg-white border-b py-3 tracking-wide text-xs md:text-sm">©
                     2020 Tickitz.
                     All Rights

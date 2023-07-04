@@ -14,7 +14,7 @@ function List_Movie() {
     const [search, setsearch] = useState('')
     const getMovies = async () => {
         try {
-            const { data } = await axios.get(`http://localhost:8000/movie?search_title=${search}&order_by=${sort}&page=${pageactive}&limit=6&month_release=${pickmonth}`)
+            const { data } = await axios.get(window.env.API_URL + `movie?search_title=${search}&order_by=${sort}&page=${pageactive}&limit=4&month_release=${pickmonth}`)
             setmovies(data.data)
             setmetamovies(data.meta)
         } catch (error) {
@@ -80,7 +80,7 @@ function List_Movie() {
                                 </select>
                             </div>
                             <div className="py-3 md:py-4">
-                                <input onChange={(v) => setsearch(v.target.value)} className="z-0 rounded-lg h-7 md:h-10 placeholder:pl-2 placeholder:text-[#4E4B66] placeholder:text-sm" type="text" placeholder="Search Movie Name . . ." />
+                                <input onChange={(v) => setsearch(v.target.value)} className="z-0 rounded-lg h-7 md:h-10 pl-5 placeholder:text-[#4E4B66] placeholder:text-sm" type="text" placeholder="Search Movie Name . . ." />
                             </div>
                         </div>
                     </div>
@@ -89,7 +89,7 @@ function List_Movie() {
                             month ? (
                                 month.map((v) => {
                                     return (
-                                        <div className="mr-8">
+                                        <div key={v.id} className="mr-8">
                                             <button onClick={() => (pickmonth == v.id ? setpickmonth('') : setpickmonth(v.id))} className={(pickmonth == v.id ? 'bg-[#5F2EEA] text-white' : 'text-[#5F2EEA]') + " hover:bg-[#5F2EEA] h-8 w-32 rounded border border-[#5F2EEA] p-2 text-sm font-semibold leading-none active:bg-[#3604c3] hover:text-white"}>{v.name}</button>
                                         </div>
                                     )
@@ -105,14 +105,14 @@ function List_Movie() {
                         movies ? (
                             movies.map((v) => {
                                 return (
-                                    <div className="flex flex-col items-center p-2 md:p-5 border border-[#DEDEDE] mb-10 rounded-lg md:mx-5 bg-white">
+                                    <div key={v.id_movie} className="flex flex-col items-center p-2 md:p-5 border border-[#DEDEDE] mb-10 rounded-lg md:mx-5 bg-white">
                                         <div className="h-[200px] w-[100px]">
                                             <img className="h-full object-cover rounded-lg" src={window.env.API_URL + v.image} alt="" />
                                         </div>
-                                        <div className="md:mt-3">
+                                        <div className="w-[100px] md:mt-3">
                                             <h5 className="tracking-wide text-base font-semibold">{capitalTitle(v.title.slice(0, 9) + (v.title.split('').length > 9 ? ' ...' : ''))}</h5>
                                             <p className="my-1 text-[10px] text-[#A0A3BD]">{v.movie_id_genre ? (v.movie_id_genre.map(u => u.name_genre).join(', ')).slice(0, 20) + ' ...' : ""}</p>
-                                            <button onClick={() => navigate(`/detail_movie/${v.id_movie}`)} className="mt-3 h-7 w-9/12 rounded border border-[#5F2EEA] text-[#5F2EEA] text-sm font-semibold leading-none hover:bg-[#5F2EEA] active:bg-[#3604c3] hover:text-white">Details</button>
+                                            <button onClick={() => navigate(`/detail_movie/${v.id_movie}`)} className="mt-3 h-7 w-full rounded border border-[#5F2EEA] text-[#5F2EEA] text-sm font-semibold leading-none hover:bg-[#5F2EEA] active:bg-[#3604c3] hover:text-white">Details</button>
                                         </div>
                                     </div>
                                 )

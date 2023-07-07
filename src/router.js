@@ -8,6 +8,7 @@ import Verification from "./page/verification";
 import List_movie from './page/list_movie';
 import Detail_movie from './page/detail_movie'
 import Manage_movie from './page/manage_movie'
+import Profile from './page/profile';
 
 function router() {
     return (
@@ -20,6 +21,7 @@ function router() {
                 <Route path="/list_movie" element={<List_movie />} />
                 <Route path="/detail_movie/:id" element={<Detail_movie />} />
                 <Route path="/manage_movie" element={<Manage_movie />} />
+                <Route path="/profile" element={<Profile />} />
             </Routes>
         </BrowserRouter>
     )

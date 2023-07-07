@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import logo_2 from '../assets/img/logo2.png'
 import profile from '../assets/img/profile.png'
 import { Link, useNavigate } from 'react-router-dom'
@@ -6,7 +6,7 @@ import { logout } from '../store/reducer/user'
 import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux";
 
-function Header() {
+function Header({ btnlogout_trigger, modal_logout_profile }) {
     const navigates = useNavigate();
     const dispatch = useDispatch()
     const { isAuth, data } = useSelector((s) => s.user)
@@ -39,25 +39,38 @@ function Header() {
     const click_menu_desktop = () => {
         seticon_search(true)
         setheader_search(true)
-        setmenu_desktop(menu_desktop == true ? false : true)
+        setmenu_desktop(menu_desktop ? false : true)
     }
     const click_menu_mobile = () => {
         seticon_search(true)
         setheader_search(true)
-        setmenu_mobile(menu_mobile == true ? false : true)
+        setmenu_mobile(menu_mobile ? false : true)
     }
     const show_modal_logout = () => {
         seticon_search(true)
         setheader_search(true)
-        setmenu_mobile(menu_mobile == true ? false : true)
-        setmenu_desktop(menu_desktop == true ? false : true)
+        setmenu_mobile(menu_mobile ? false : true)
+        setmenu_desktop(menu_desktop ? false : true)
         setmodal_logout(false)
     }
     const hidden_modal_logout = () => {
         seticon_search(true)
         setheader_search(true)
         setmodal_logout(true)
+        modal_logout_profile(false)
     }
+
+    useEffect(() => {
+        if (btnlogout_trigger) {
+            seticon_search(true)
+            setheader_search(true)
+            setmenu_mobile(true)
+            setmenu_desktop(true)
+            setmodal_logout(false)
+            console.log(modal_logout)
+        }
+    }, [btnlogout_trigger])
+
     return (
         <header className="sticky top-0 px-5 md:px-20 relative flex justify-between py-4 bg-white z-10 md:shadow-sm">
             <nav className="flex items-center">
@@ -106,7 +119,7 @@ function Header() {
             </div>
             <div className={menu_desktop ? "hidden" : "hidden lg:grid absolute bg-white rounded shadow-md right-24 top-[4.5rem]"}>
                 <p className="px-3 py-2 tracking-wide font-normal border-b">{data[0] ? capital(data[0].first_name + ' ' + data[0].last_name) : 'Guest'}</p>
-                <Link className="px-3 tracking-wide font-normal hover:font-bold" to="/#">Profile</Link>
+                <Link className="px-3 tracking-wide font-normal hover:font-bold" to="/profile">Profile</Link>
                 <p><Link className="px-3 tracking-wide font-normal hover:font-bold" onClick={show_modal_logout}>Logout</Link>
                 </p>
             </div>
@@ -147,7 +160,7 @@ function Header() {
                         </>
                     )
                 }
-                <p className="bg-white border-b py-3 tracking-wide text-sm md:text-base hover:font-bold"><Link to="/#" >Profile</Link></p>
+                <p className="bg-white border-b py-3 tracking-wide text-sm md:text-base hover:font-bold"><Link to="/profile" >Profile</Link></p>
                 <p className="bg-white border-b py-3 tracking-wide text-sm md:text-base hover:font-bold"><Link onClick={show_modal_logout}>Logout</Link></p>
                 <p onClick={click_menu_mobile} className="bg-white border-b py-3 tracking-wide text-xs md:text-sm">©
                     2020 Tickitz.

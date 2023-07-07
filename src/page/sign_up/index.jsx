@@ -2,10 +2,11 @@ import React, { useEffect, useState } from "react";
 import logo2 from '../../assets/img/logo2.png'
 import { Link, useNavigate } from 'react-router-dom'
 import Leftback from '../../component/left-background'
-import axios from "axios"
+import useApi from '../../helper/useApi'
 
 
 function Sign_up() {
+    const api = useApi()
     const navigate = useNavigate();
     const [first, setfirst] = useState('')
     const [last, setlast] = useState('')
@@ -18,12 +19,14 @@ function Sign_up() {
     const Register = async (e) => {
         e.preventDefault()
         try {
-            const { data } = await axios.post(window.env.API_URL + 'register', {
-                "first_name": first,
-                "last_name": last,
-                "phone": phone,
-                "email": email,
-                "pass": password
+            const { data } = await api({
+                method: 'post', url: 'register', data: {
+                    "first_name": first,
+                    "last_name": last,
+                    "phone": phone,
+                    "email": email,
+                    "pass": password
+                }
             })
             sessionStorage.setItem('success', data.message)
             navigate('/sign-in');

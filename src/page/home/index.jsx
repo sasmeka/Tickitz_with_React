@@ -4,10 +4,11 @@ import Footer from "../../component/footer";
 import home1 from '../../assets/img/home1.png'
 import home2 from '../../assets/img/home2.png'
 import home3 from '../../assets/img/home3.png'
-import axios from 'axios'
 import { Link, useNavigate } from 'react-router-dom'
+import useApi from '../../helper/useApi'
 
 function Home() {
+    const api = useApi()
     const navigate = useNavigate()
     const [ismovieHovering, setIsmovieHovering] = useState('');
     const [hovimg, sethovimg] = useState('');
@@ -31,7 +32,7 @@ function Home() {
 
     const getMovies = async () => {
         try {
-            const { data } = await axios.get(window.env.API_URL + `movie?limit=6&order_by=release_date&month_release=${pickmonth}`)
+            const { data } = await api({ method: 'get', url: `movie?limit=6&order_by=release_date&month_release=${pickmonth}` })
             setmovies(data.data)
         } catch (error) {
             setmovies(false)
@@ -41,7 +42,7 @@ function Home() {
 
     const getNowshowing = async () => {
         try {
-            const { data } = await axios.get(window.env.API_URL + `movie?limit=8&order_by=release_date`)
+            const { data } = await api({ method: 'get', url: `movie?limit=8&order_by=release_date` })
             setnowshow(data.data)
         } catch (error) {
             setnowshow(false)
@@ -91,7 +92,7 @@ function Home() {
                                 nowshow.map((v) => {
                                     return (
                                         <div key={v.id_movie} className={"w-36 " + (hovimg === v ? 'h-full bg-white shadow-lg' : 'h-4/6') + " mx-5 px-5 pt-5 pb-5 border border-white border-2 rounded-lg"} >
-                                            <img onClick={() => [ismovieHovering === v ? setIsmovieHovering(0) : setIsmovieHovering(v), hovimg === v ? sethovimg(0) : sethovimg(v)]} onMouseOver={() => [setIsmovieHovering(v), sethovimg(v)]} className={"rounded-lg " + (hovimg === v ? 'h-4/6' : 'h-full') + " w-full object-cover"} src={window.env.API_URL + v.image} alt="" />
+                                            <img onClick={() => [ismovieHovering === v ? setIsmovieHovering(0) : setIsmovieHovering(v), hovimg === v ? sethovimg(0) : sethovimg(v)]} onMouseOver={() => [setIsmovieHovering(v), sethovimg(v)]} className={"rounded-lg " + (hovimg === v ? 'h-4/6' : 'h-full') + " w-full object-cover"} src={process.env.REACT_APP_API_URL + v.image} alt="" />
                                             {
                                                 ismovieHovering === v && hovimg === v ? (
                                                     <div className="bg-white mt-3 text-center">
@@ -136,7 +137,7 @@ function Home() {
                                 movies.map((v) => {
                                     return (
                                         <div key={v.id_movie} className="w-36 h-full mx-5 px-5 pt-5 pb-32 border border-[#DEDEDE] rounded-lg" >
-                                            <img className="rounded-lg h-full w-full object-cover" src={window.env.API_URL + v.image} alt="" />
+                                            <img className="rounded-lg h-full w-full object-cover" src={process.env.REACT_APP_API_URL + v.image} alt="" />
                                             <div className="bg-white mt-3 text-center">
                                                 <h5 className="tracking-wide text-sm font-semibold">{capitalTitle(v.title.slice(0, 9) + (v.title.split('').length > 9 ? ' ...' : ''))}</h5>
                                                 <p className="my-1 text-[10px] text-[#A0A3BD]">{

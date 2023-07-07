@@ -2,9 +2,10 @@ import React, { useEffect, useState } from "react";
 import logo2 from '../../assets/img/logo2.png'
 import { Link, useNavigate } from 'react-router-dom'
 import Leftback from '../../component/left-background'
-import axios from 'axios'
+import useApi from '../../helper/useApi'
 
 function Sign_in() {
+    const api = useApi()
     const navigate = useNavigate();
     const [email, setemail] = useState('')
     const [password, setpassword] = useState('')
@@ -15,9 +16,11 @@ function Sign_in() {
     const Login = async (e) => {
         e.preventDefault()
         try {
-            const { data } = await axios.post(window.env.API_URL + 'login', {
-                "email": email,
-                "pass": password
+            const { data } = await api({
+                method: 'post', url: 'login', data: {
+                    "email": email,
+                    "pass": password
+                }
             })
             localStorage.setItem('Users', JSON.stringify(data.data))
             localStorage.setItem('Token', data.Token)
@@ -50,7 +53,7 @@ function Sign_in() {
                     <form onSubmit={Login}>
                         <h1 className="text-2xl md:text-4xl font-bold my-2">Sign In</h1>
                         <p className="text-[#AAAAAA] text-md md:text-lg tracking-wide mb-8">Sign in with your data that you entered during your registration</p>
-                        {errors.message && <div className="text-red-600 tracking-wide mb-3 text-sm"> {errors.message} </div>}
+                        {errors.message && <div className="text-red-600 tracking-wide mb-3 text-sm">{errors.message}</div>}
                         {success && <div className="text-green-600 tracking-wide mb-3 text-sm"> {success} </div>}
                         <div className="flex flex-col mb-5">
                             <label className="mb-3 text-sm md:text-md text-[#4E4B66]">Email</label>

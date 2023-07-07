@@ -2,10 +2,11 @@ import React, { useEffect, useState, useRef } from "react";
 import moment from "moment/moment";
 import Header from "../../component/header";
 import Footer from "../../component/footer";
-import axios from 'axios'
+import useApi from '../../helper/useApi'
 import { Link, useParams } from 'react-router-dom'
 
 function Detail_Movie() {
+    const api = useApi()
     const params = useParams()
 
     const [movie, setmovie] = useState([]);
@@ -24,7 +25,7 @@ function Detail_Movie() {
 
     const getMovie = async () => {
         try {
-            const { data } = await axios.get(window.env.API_URL + `movie/${params.id}`)
+            const { data } = await api({ method: 'get', url: `movie/${params.id}` })
             setmovie(data.data)
             setmetamovie(data.meta)
         } catch (error) {
@@ -34,7 +35,7 @@ function Detail_Movie() {
     }
     const getSchedule = async () => {
         try {
-            const { data } = await axios.get(window.env.API_URL + `schedule?id_regency=${pickloc}&limit=${incrementlimit}&page=1&id_movie=${params.id}`)
+            const { data } = await api({ method: 'get', url: `schedule?id_regency=${pickloc}&limit=${incrementlimit}&page=1&id_movie=${params.id}` })
             setschedule(data.data)
             setmetaschedule(data.meta)
         } catch (error) {
@@ -44,7 +45,7 @@ function Detail_Movie() {
     }
     const getRegency = async () => {
         try {
-            const { data } = await axios.get(window.env.API_URL + `regency`)
+            const { data } = await api({ method: 'get', url: `regency` })
             setregency(data.data)
             setmetaregency(data.meta)
         } catch (error) {
@@ -89,7 +90,7 @@ function Detail_Movie() {
                             <>
                                 <div key={v.id_movie} className="md:col-span-2 lg:col-span-1 flex justify-around">
                                     <div className="w-48 md:h-80 md:w-56 lg:h-[300px] lg:w-48 m-5 md:m-0 p-5 md:p-5 border rounded-xl">
-                                        <img className="h-full object-cover rounded-xl" src={window.env.API_URL + v.image} alt="" />
+                                        <img className="h-full object-cover rounded-xl" src={process.env.REACT_APP_API_URL + v.image} alt="" />
                                     </div>
                                 </div>
                                 <div className="md:col-span-3 lg:col-span-3 flex flex-col">
@@ -151,7 +152,7 @@ function Detail_Movie() {
                             </div>
                         </div>
                     </div>
-                    <div className={"my-10 grid md:" + (schedule ? 'grid-cols-2' : 'grid-cols-1') + " lg:" + (schedule ? 'grid-cols-3' : 'grid-cols-1') + " 2xl:" + (schedule ? 'grid-cols-4' : 'grid-cols-1') + " gap-10 mx-5 mb:mx-0"}>
+                    <div className={"my-10 grid " + (schedule ? 'md:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4' : 'grid-cols-1') + " gap-10 mx-5 mb:mx-0"}>
                         {
                             schedule ? (
                                 schedule.map((v) => (
@@ -159,7 +160,7 @@ function Detail_Movie() {
                                         <div className="grid grid-cols-3 items-center pb-5 gap-5">
                                             <div className="flex justify-around">
                                                 <div className="w-4/5">
-                                                    <img className="" src={window.env.API_URL + v.premier.map(p => p.image)} alt="" />
+                                                    <img className="" src={process.env.REACT_APP_API_URL + v.premier.map(p => p.image)} alt="" />
                                                 </div>
                                             </div>
                                             <div className="col-span-2">

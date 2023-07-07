@@ -2,10 +2,11 @@ import React, { useEffect, useState } from "react";
 import Header from "../../component/header";
 import Pagination from "../../component/pagination"
 import Footer from "../../component/footer";
-import axios from 'axios'
+import useApi from '../../helper/useApi'
 import { useNavigate } from 'react-router-dom'
 
 function List_Movie() {
+    const api = useApi()
     const navigate = useNavigate()
     const [movies, setmovies] = useState([]);
     const [metamovies, setmetamovies] = useState([]);
@@ -14,7 +15,7 @@ function List_Movie() {
     const [search, setsearch] = useState('')
     const getMovies = async () => {
         try {
-            const { data } = await axios.get(window.env.API_URL + `movie?search_title=${search}&order_by=${sort}&page=${pageactive}&limit=4&month_release=${pickmonth}`)
+            const { data } = await api({ method: 'get', url: `movie?search_title=${search}&order_by=${sort}&page=${pageactive}&limit=4&month_release=${pickmonth}` })
             setmovies(data.data)
             setmetamovies(data.meta)
         } catch (error) {
@@ -107,7 +108,7 @@ function List_Movie() {
                                 return (
                                     <div key={v.id_movie} className="flex flex-col items-center p-2 md:p-5 border border-[#DEDEDE] mb-10 rounded-lg md:mx-5 bg-white">
                                         <div className="h-[200px] w-[100px]">
-                                            <img className="h-full object-cover rounded-lg" src={window.env.API_URL + v.image} alt="" />
+                                            <img className="h-full object-cover rounded-lg" src={process.env.REACT_APP_API_URL + v.image} alt="" />
                                         </div>
                                         <div className="w-[100px] md:mt-3">
                                             <h5 className="tracking-wide text-base font-semibold">{capitalTitle(v.title.slice(0, 9) + (v.title.split('').length > 9 ? ' ...' : ''))}</h5>

@@ -4,8 +4,12 @@ import { Link, useNavigate } from 'react-router-dom'
 import Leftback from '../../component/left-background'
 import useApi from '../../helper/useApi'
 
+import { login, addrefresh_token } from '../../store/reducer/user'
+import { useDispatch } from "react-redux";
+
 function Sign_in() {
     const api = useApi()
+    const dispatch = useDispatch()
     const navigate = useNavigate();
     const [email, setemail] = useState('')
     const [password, setpassword] = useState('')
@@ -22,9 +26,9 @@ function Sign_in() {
                     "pass": password
                 }
             })
-            localStorage.setItem('Users', JSON.stringify(data.data))
-            localStorage.setItem('Token', data.Token)
-            localStorage.setItem('Refresh_Token', data.Refresh_Token)
+
+            dispatch(login(data.Token))
+            dispatch(addrefresh_token(data.Refresh_Token))
             navigate('/');
         } catch (error) {
             seterrors(error.response.data)

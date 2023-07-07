@@ -7,9 +7,30 @@ import home3 from '../../assets/img/home3.png'
 import { Link, useNavigate } from 'react-router-dom'
 import useApi from '../../helper/useApi'
 
+import { useSelector } from "react-redux";
+import { adddata, logout } from '../../store/reducer/user'
+import { useDispatch } from "react-redux";
+
 function Home() {
     const api = useApi()
-    const navigate = useNavigate()
+    const navigates = useNavigate()
+
+    const dispatch = useDispatch()
+    const { isAuth } = useSelector((s) => s.user)
+    const getDataUser = async () => {
+        try {
+            const { data } = await api({ method: 'get', url: `user/byid` })
+            dispatch(adddata(data.data))
+        } catch (error) {
+            if (error.response.data.status == 401) {
+                dispatch(logout())
+                sessionStorage.clear()
+                navigates(`/sign-in`)
+            }
+            console.log(error.response.data)
+        }
+    }
+
     const [ismovieHovering, setIsmovieHovering] = useState('');
     const [hovimg, sethovimg] = useState('');
     const [nowshow, setnowshow] = useState([]);
@@ -59,6 +80,9 @@ function Home() {
 
     useEffect(() => {
         document.title = 'Home';
+        if (isAuth) {
+            getDataUser()
+        }
         getMovies()
         getNowshowing()
     }, []);
@@ -98,7 +122,7 @@ function Home() {
                                                     <div className="bg-white mt-3 text-center">
                                                         <h5 className="h-5 mb-2 grid items-center text-sm font-semibold tracking-wider">{capitalTitle(v.title.slice(0, 9) + (v.title.split('').length > 9 ? ' ...' : ''))}</h5>
                                                         <p className="text-[9px]">{v.movie_id_genre ? (v.movie_id_genre.map(u => u.name_genre).join(', ')).slice(0, 20) + ' ...' : ""}</p>
-                                                        <button onMouseOut={() => [setIsmovieHovering(''), sethovimg('')]} onClick={() => navigate(`/detail_movie/${v.id_movie}`)} className="h-5 rounded text-[#5F2EEA] text-[8px] border border-[#5F2EEA] font-semibold w-4/5 hover:bg-[#5F2EEA] hover:text-white mt-3">Details</button>
+                                                        <button onMouseOut={() => [setIsmovieHovering(''), sethovimg('')]} onClick={() => navigates(`/detail_movie/${v.id_movie}`)} className="h-5 rounded text-[#5F2EEA] text-[8px] border border-[#5F2EEA] font-semibold w-4/5 hover:bg-[#5F2EEA] hover:text-white mt-3">Details</button>
                                                     </div>
                                                 ) : ''
                                             }
@@ -143,7 +167,7 @@ function Home() {
                                                 <p className="my-1 text-[10px] text-[#A0A3BD]">{
                                                     v.movie_id_genre ? (v.movie_id_genre.map(u => u.name_genre).join(', ')).slice(0, 20) + ' ...' : ""
                                                 }</p>
-                                                <button onClick={() => navigate(`/detail_movie/${v.id_movie}`)} className="mt-3 h-7 w-9/12 rounded border border-[#5F2EEA] text-[#5F2EEA] text-sm font-semibold leading-none hover:bg-[#5F2EEA] active:bg-[#3604c3] hover:text-white">Details</button>
+                                                <button onClick={() => navigates(`/detail_movie/${v.id_movie}`)} className="mt-3 h-7 w-9/12 rounded border border-[#5F2EEA] text-[#5F2EEA] text-sm font-semibold leading-none hover:bg-[#5F2EEA] active:bg-[#3604c3] hover:text-white">Details</button>
                                             </div>
                                         </div>
                                     )

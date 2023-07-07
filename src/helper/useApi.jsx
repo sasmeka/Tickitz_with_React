@@ -1,8 +1,10 @@
 import axios from 'axios'
 import { useState } from "react";
+import { useSelector } from "react-redux";
 
 function useApi() {
-    const token = localStorage.getItem("Token") ? localStorage.getItem("Token") : ''
+    let { token } = useSelector((s) => s.user)
+    token = token != '' ? token : ''
     const [request, setrequest] = useState({
         baseURL: process.env.REACT_APP_API_URL || '',
         headers: {
@@ -11,7 +13,6 @@ function useApi() {
         }
     })
     return axios.create(request)
-
 }
 
 export default useApi

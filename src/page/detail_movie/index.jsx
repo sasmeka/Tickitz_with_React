@@ -3,11 +3,32 @@ import moment from "moment/moment";
 import Header from "../../component/header";
 import Footer from "../../component/footer";
 import useApi from '../../helper/useApi'
-import { Link, useParams } from 'react-router-dom'
+import { Link, useParams, useNavigate } from 'react-router-dom'
+
+import { useSelector } from "react-redux";
+import { adddata, logout } from '../../store/reducer/user'
+import { useDispatch } from "react-redux";
 
 function Detail_Movie() {
     const api = useApi()
     const params = useParams()
+    const navigates = useNavigate()
+
+    const dispatch = useDispatch()
+    const { isAuth } = useSelector((s) => s.user)
+    const getDataUser = async () => {
+        try {
+            const { data } = await api({ method: 'get', url: `user/byid` })
+            dispatch(adddata(data.data))
+        } catch (error) {
+            if (error.response.data.status == 401) {
+                dispatch(logout())
+                sessionStorage.clear()
+                navigates(`/sign-in`)
+            }
+            console.log(error.response.data)
+        }
+    }
 
     const [movie, setmovie] = useState([]);
     const [metamovie, setmetamovie] = useState([]);
@@ -30,7 +51,7 @@ function Detail_Movie() {
             setmetamovie(data.meta)
         } catch (error) {
             setmovie(false)
-            console.log(error)
+            console.log(error.response.data)
         }
     }
     const getSchedule = async () => {
@@ -72,6 +93,9 @@ function Detail_Movie() {
 
     useEffect(() => {
         document.title = 'Detail Movie';
+        if (isAuth) {
+            getDataUser()
+        }
         getMovie()
         getSchedule()
         getRegency()

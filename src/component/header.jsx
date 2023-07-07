@@ -2,18 +2,24 @@ import React, { useState } from "react";
 import logo_2 from '../assets/img/logo2.png'
 import profile from '../assets/img/profile.png'
 import { Link, useNavigate } from 'react-router-dom'
+import { logout } from '../store/reducer/user'
+import { useDispatch } from "react-redux";
+import { useSelector } from "react-redux";
 
 function Header() {
     const navigates = useNavigate();
+    const dispatch = useDispatch()
+    const { isAuth, data } = useSelector((s) => s.user)
+
     const [icon_search, seticon_search] = useState(true)
     const [header_search, setheader_search] = useState(true)
     const [menu_desktop, setmenu_desktop] = useState(true)
     const [menu_mobile, setmenu_mobile] = useState(true)
     const [modal_logout, setmodal_logout] = useState(true)
 
-    const logout = () => {
+    const btnlogout = () => {
+        dispatch(logout())
         sessionStorage.clear()
-        localStorage.removeItem('Token')
         localStorage.removeItem('Users')
         navigates(`/sign-in`)
     }
@@ -57,12 +63,21 @@ function Header() {
             <nav className="flex items-center">
                 <img className="h-8 md:h-10 lg:h-14 pe-10" src={logo_2} alt="" />
                 {
-                    localStorage.getItem('Users') && JSON.parse(localStorage.getItem('Users')).role == 'admin' ? (
-                        <>
-                            <Link className="hidden lg:block text-[#414141] text-base font-normal hover:font-bold tracking-wide" to="/">Dashboard</Link>
-                            <Link className="hidden lg:block pl-7 text-[#414141] text-base font-normal hover:font-bold tracking-wide" to="/manage_movie">Manage Movie</Link>
-                            <Link className="hidden lg:block pl-7 text-[#414141] text-base font-normal hover:font-bold tracking-wide" to="/manage_schedule">Manage Schedule</Link>
-                        </>
+                    isAuth ? (
+                        data[0] && data[0].role == 'admin' ? (
+                            <>
+                                <Link className="hidden lg:block text-[#414141] text-base font-normal hover:font-bold tracking-wide" to="/">Dashboard</Link>
+                                <Link className="hidden lg:block pl-7 text-[#414141] text-base font-normal hover:font-bold tracking-wide" to="/manage_movie">Manage Movie</Link>
+                                <Link className="hidden lg:block pl-7 text-[#414141] text-base font-normal hover:font-bold tracking-wide" to="/manage_schedule">Manage Schedule</Link>
+                            </>
+                        ) : (
+                            <>
+                                <Link className="hidden lg:block text-[#414141] text-base font-normal hover:font-bold tracking-wide" to="/">Home</Link>
+                                <Link className="hidden lg:block pl-7 text-[#414141] text-base font-normal hover:font-bold tracking-wide" to="/list_movie">List
+                                    Movie</Link>
+                            </>
+                        )
+
                     ) : (
                         <>
                             <Link className="hidden lg:block text-[#414141] text-base font-normal hover:font-bold tracking-wide" to="/">Home</Link>
@@ -70,12 +85,13 @@ function Header() {
                                 Movie</Link>
                         </>
                     )
+
                 }
             </nav>
-            <div className={localStorage.getItem('Users') ? "hidden" : "block"}>
+            <div className={data[0] ? "hidden" : "block"}>
                 <button onClick={() => { navigates(`/sign-in`) }} className="mt-2 h-6 w-16 md:h-8 md:w-20 bg-[#5F2EEA] rounded-md text-[10px] md:text-[12px] tracking-wide text-white">Sign Up</button>
             </div>
-            <div className={localStorage.getItem('Users') ? "flex items-center" : "hidden"}>
+            <div className={data[0] ? "flex items-center" : "hidden"}>
                 <Link to="/#" onClick={show_header_search} className={icon_search ? 'hidden lg:block pe-8' : 'hidden'}>
                     <i className="fa fa-search text-[#414141]" aria-hidden="true" />
                 </Link>
@@ -89,7 +105,7 @@ function Header() {
                 <Link className="block lg:hidden" onClick={click_menu_mobile}><i className="fa fa-bars" style={{ maxWidth: '200px' }} aria-hidden="true" /></Link>
             </div>
             <div className={menu_desktop ? "hidden" : "hidden lg:grid absolute bg-white rounded shadow-md right-24 top-[4.5rem]"}>
-                <p className="px-3 py-2 tracking-wide font-normal border-b">{localStorage.getItem('Users') ? capital(JSON.parse(localStorage.getItem('Users')).first_name + ' ' + JSON.parse(localStorage.getItem('Users')).last_name) : 'Guest'}</p>
+                <p className="px-3 py-2 tracking-wide font-normal border-b">{data[0] ? capital(data[0].first_name + ' ' + data[0].last_name) : 'Guest'}</p>
                 <Link className="px-3 tracking-wide font-normal hover:font-bold" to="/#">Profile</Link>
                 <p><Link className="px-3 tracking-wide font-normal hover:font-bold" onClick={show_modal_logout}>Logout</Link>
                 </p>
@@ -104,7 +120,7 @@ function Header() {
                         <p>Are you sure you want to logout?</p>
                     </div>
                     <div className="flex pt-2 border-t justify-between items-center">
-                        <button onClick={logout} className="bg-[#dc2626] h-8 w-20 rounded-lg text-white font-bold text-sm">Log
+                        <button onClick={btnlogout} className="bg-[#dc2626] h-8 w-20 rounded-lg text-white font-bold text-sm">Log
                             Out</button>
                     </div>
                 </div>
@@ -117,7 +133,7 @@ function Header() {
                     </div>
                 </div>
                 {
-                    localStorage.getItem('Users') && JSON.parse(localStorage.getItem('Users')).role == 'admin' ? (
+                    data[0] && data[0].role == 'admin' ? (
                         <>
                             <p className="bg-white border-t border-b py-3 tracking-wide text-sm md:text-base hover:font-bold"><Link to="/dashboard">Dashboard</Link></p>
                             <p className="bg-white border-b py-3 tracking-wide text-sm md:text-base hover:font-bold"><Link to="/manage_movie">Manage Movie</Link></p>

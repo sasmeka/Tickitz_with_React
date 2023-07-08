@@ -56,7 +56,7 @@ function Detail_Movie() {
     }
     const getSchedule = async () => {
         try {
-            const { data } = await api({ method: 'get', url: `schedule?id_regency=${pickloc}&limit=${incrementlimit}&page=1&id_movie=${params.id}` })
+            const { data } = await api({ method: 'get', url: `schedule?id_regency=${pickloc}&limit=${incrementlimit}&page=1&id_movie=${params.id}&pickdate=${pickdate}` })
             setschedule(data.data)
             setmetaschedule(data.meta)
         } catch (error) {
@@ -102,7 +102,7 @@ function Detail_Movie() {
     }, []);
     useEffect(() => {
         getSchedule()
-    }, [pickloc, incrementlimit]);
+    }, [pickloc, incrementlimit, pickdate]);
 
     return (
         <>
@@ -159,7 +159,7 @@ function Detail_Movie() {
                         <div className="flex flex-col md:flex-row">
                             <div className="relative mb-3 md:mr-3">
                                 <i className="fa fa-calendar absolute left-2 top-[12px]" aria-hidden="true" />
-                                <input type="date" ref={dateRef} className="bg-[#EFF0F6] h-10 w-40 pl-8 rounded-md appearance-none" />
+                                <input type="date" ref={dateRef} onChange={(e) => setpickdate(e.target.value)} className="bg-[#EFF0F6] h-10 w-40 pl-8 rounded-md appearance-none" />
                                 <i onClick={() => { dateRef.current.showPicker(); }} className="fa fa-sort-desc absolute right-0 top-[10px] bg-[#EFF0F6] w-5 h-5" aria-hidden="true" />
                             </div>
                             <div className="relative">
@@ -179,35 +179,36 @@ function Detail_Movie() {
                     <div className={"my-10 grid " + (schedule ? 'md:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4' : 'grid-cols-1') + " gap-10 mx-5 mb:mx-0"}>
                         {
                             schedule ? (
-                                schedule.map((v) => (
-                                    <div key={v.id_schedule} className="bg-white rounded-xl p-3 shadow-md">
-                                        <div className="grid grid-cols-3 items-center pb-5 gap-5">
-                                            <div className="flex justify-around">
-                                                <div className="w-4/5">
-                                                    <img className="" src={process.env.REACT_APP_API_URL + v.premier.map(p => p.image)} alt="" />
+                                schedule.map((v) => {
+                                    return (
+                                        <div key={v.id_schedule} className="bg-white rounded-xl p-3 shadow-md">
+                                            <div className="grid grid-cols-3 items-center pb-5 gap-5">
+                                                <div className="flex justify-around">
+                                                    <div className="w-4/5">
+                                                        <img className="" src={process.env.REACT_APP_API_URL + v.premier.map(p => p.image)} alt="" />
+                                                    </div>
+                                                </div>
+                                                <div className="col-span-2">
+                                                    <h1 className="text-xl tracking-wider font-semibold">{v.premier.map(p => p.name_premier)}</h1>
+                                                    <p className="text-[11px] tracking-wider text-[#6E7191]">{v.full_location.map(p => p.address)}</p>
                                                 </div>
                                             </div>
-                                            <div className="col-span-2">
-                                                <h1 className="text-xl tracking-wider font-semibold">{v.premier.map(p => p.name_premier)}</h1>
-                                                <p className="text-[11px] tracking-wider text-[#6E7191]">{v.full_location.map(p => p.address)}</p>
+                                            <div className="grid grid-cols-4 items-center text-center gap-2">
+                                                {
+                                                    v.times.map(p => (
+                                                        <Link key={v.id_time_schedule} onClick={() => setpicktime(p.id_time_schedule)} className={"text-[10px] text-[#4E4B66] tracking-wider " + (picktime == p.id_time_schedule ? 'font-bold' : '')}>{p.time_schedule.substring(0, 5)} WIB</Link>
+                                                    ))
+                                                }
                                             </div>
-                                        </div>
-                                        <div className="grid grid-cols-4 items-center text-center gap-2">
-                                            {
-                                                v.times.map(p => (
-                                                    <Link key={v.id_time_schedule} onClick={() => setpicktime(p.id_time_schedule)} className={"text-[10px] text-[#4E4B66] tracking-wider " + (picktime == p.id_time_schedule ? 'font-bold' : '')}>{p.time_schedule.substring(0, 5)} WIB</Link>
-                                                ))
-                                            }
-                                        </div>
-                                        <div className="flex justify-between px-2 py-5">
-                                            <h1 className="text-[#6B6B6B] text-md tracking-wider">Price</h1>
-                                            <p className="text-md tracking-wider font-semibold">Rp. {v.price} / seat</p>
-                                        </div>
-                                        <div className="px-2 pb-2">
-                                            <button className="w-full h-10 bg-[#5F2EEA] rounded-xl hover:bg-[#2A00A2] text-white text-sm">Book now</button>
-                                        </div>
-                                    </div>)
-                                )
+                                            <div className="flex justify-between px-2 py-5">
+                                                <h1 className="text-[#6B6B6B] text-md tracking-wider">Price</h1>
+                                                <p className="text-md tracking-wider font-semibold">Rp. {v.price} / seat</p>
+                                            </div>
+                                            <div className="px-2 pb-2">
+                                                <button className="w-full h-10 bg-[#5F2EEA] rounded-xl hover:bg-[#2A00A2] text-white text-sm">Book now</button>
+                                            </div>
+                                        </div>)
+                                })
                             ) : (
                                 <div className="my-5">
                                     <h1 className="text-[#4E4B66] text-center">Data not found</h1>

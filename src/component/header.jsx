@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
 import logo_2 from '../assets/img/logo2.png'
-import profile from '../assets/img/profile.png'
 import { Link, useNavigate } from 'react-router-dom'
 import { logout } from '../store/reducer/user'
 import { useDispatch } from "react-redux";
@@ -67,7 +66,6 @@ function Header({ btnlogout_trigger, modal_logout_profile }) {
             setmenu_mobile(true)
             setmenu_desktop(true)
             setmodal_logout(false)
-            console.log(modal_logout)
         }
     }, [btnlogout_trigger])
 
@@ -112,8 +110,8 @@ function Header({ btnlogout_trigger, modal_logout_profile }) {
                     <i className="fa fa-search text-[#6E7192] absolute left-2" aria-hidden="true" />
                     <input type="text" className="h-7 w-50 rounded-xl border pl-7" placeholder="Search . . ." />
                 </div>
-                <Link className='hidden lg:block' onClick={click_menu_desktop}>
-                    <img className="h-10 rounded-full" src={profile} alt="" />
+                <Link className='hidden lg:flex h-[40px] w-[40px]' onClick={click_menu_desktop}>
+                    <img className="w-full object-cover rounded-full" src={isAuth ? data[0] && data[0].image != '' ? process.env.REACT_APP_API_URL + data[0].image : '' : ''} alt="" />
                 </Link>
                 <Link className="block lg:hidden" onClick={click_menu_mobile}><i className="fa fa-bars" style={{ maxWidth: '200px' }} aria-hidden="true" /></Link>
             </div>

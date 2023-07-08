@@ -15,7 +15,7 @@ function Sign_in() {
     const [password, setpassword] = useState('')
     const [errors, seterrors] = useState([])
     const [success, setsuccess] = useState([])
-    const [cpass, setcpass] = useState(true)
+
 
     const Login = async (e) => {
         e.preventDefault()
@@ -34,6 +34,7 @@ function Sign_in() {
             seterrors(error.response.data)
         }
     }
+    const [cpass, setcpass] = useState(true)
     const click_pass = () => {
         setcpass(cpass == true ? false : true)
     }

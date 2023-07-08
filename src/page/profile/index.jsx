@@ -189,11 +189,11 @@ function Profile() {
                 </section>
                 <section className="order-first md:order-none col-span-2 md:col-span-3 bg-white w-full h-16 md:rounded-xl shadow-sm">
                     <div className="grid grid-cols-2 md:grid-cols-4 h-full text-center items-center">
-                        <Link onClick={btnaccount_setting} className={tab_as ? "h-full ml-10 grid items-center border-[#5F2EEA] border-b-2 font-bold text-sm" : 'h-full ml-10 grid items-center text-[#AAA] text-sm'}>
+                        <Link onClick={btnaccount_setting} className={tab_as ? "h-full ml-0 md:ml-10 grid items-center border-[#5F2EEA] border-b-2 font-bold text-sm" : 'h-full ml-0 md:ml-10 grid items-center text-[#AAA] text-sm'}>
                             <button className="hidden md:block">Account Settings</button>
                             <button className="block md:hidden">Detail Account</button>
                         </Link>
-                        <Link onClick={btnorder_history} id="tab-oh" className={tab_oh ? 'h-full ml-10 grid items-center border-[#5F2EEA] border-b-2 font-bold text-sm' : 'h-full ml-10 grid items-center text-[#AAA] text-sm'}>
+                        <Link onClick={btnorder_history} id="tab-oh" className={tab_oh ? 'h-full ml-0 md:ml-10 grid items-center border-[#5F2EEA] border-b-2 font-bold text-sm' : 'h-full ml-0 md:ml-10 grid items-center text-[#AAA] text-sm'}>
                             <button>Order History</button>
                         </Link>
                     </div>
@@ -286,48 +286,6 @@ function Profile() {
                             )
                         }) : ''
                     }
-                    {/* <div className="bg-white md:my-4 rounded-2xl md:rounded-xl shadow-sm mx-5 md:mx-0">
-                                <div className="flex flex-col md:flex-row md:justify-between items-start md:items-center py-5 md:py-8 border-b px-5 md:px-10">
-                                    <div className="flex flex-col">
-                                        <p className="text-[#AAA] text-xs tracking-wider">Tuesday, 07 July 2020 - 04:30pm</p>
-                                        <h1 className="text-lg md:text-xl font-bold tracking-wider">{v.title[0].title}</h1>
-                                    </div>
-                                    <img className="order-first md:order-none h-5 md:h-6 mb-4" src="assets/img/cineone21-logo.png" alt="" />
-                                </div>
-                                <div className="px-10 flex justify-between items-center h-20">
-                                    <button className="bg-[#00BA88] active:bg-[#007052] h-8 md:h-10 w-full md:w-3/12 rounded-lg md:rounded text-white tracking-wider font-semibold text-sm">Ticket
-                                        in active</button>
-                                    <Link className="hidden md:block text-[#AAA] text-sm tracking-wide">See Details</Link>
-                                </div>
-                            </div> */}
-                    {/* <div className="bg-white my-4 rounded-2xl md:rounded-xl shadow-sm mx-5 md:mx-0">
-                        <div className="flex flex-col md:flex-row md:justify-between items-start md:items-center py-5 md:py-8 border-b px-5 md:px-10">
-                            <div className="flex flex-col">
-                                <p className="text-[#AAA] text-xs tracking-wider">Monday, 14 June 2020 -02:00pm</p>
-                                <h1 className="text-lg md:text-xl font-bold tracking-wider">Avengers: End Game</h1>
-                            </div>
-                            <img className="order-first md:order-none h-5 md:h-6 mb-4" src="assets/img/ebu.id-logo.png" alt="" />
-                        </div>
-                        <div className="px-10 flex justify-between items-center h-20">
-                            <button className="bg-[#6E7191] active:bg-[#3c3f5f] h-8 md:h-10 w-full md:w-3/12 rounded-lg md:rounded text-white tracking-wider font-semibold text-sm">Ticket
-                                used</button>
-                            <Link className="hidden md:block text-[#AAA] text-sm tracking-wide">See Details</Link>
-                        </div>
-                    </div>
-                    <div className="bg-white my-4 rounded-2xl md:rounded-xl shadow-sm mx-5 md:mx-0">
-                        <div className="flex flex-col md:flex-row md:justify-between items-start md:items-center py-5 md:py-8 border-b px-5 md:px-10">
-                            <div className="flex flex-col">
-                                <p className="text-[#AAA] text-xs tracking-wider">Monday, 10 March 2020 - 04:00pm</p>
-                                <h1 className="text-lg md:text-xl font-bold tracking-wider">Thor: Ragnarok</h1>
-                            </div>
-                            <img className="order-first md:order-none h-5 md:h-6 mb-4" src="assets/img/hiflix-logo.png" alt="" />
-                        </div>
-                        <div className="px-10 flex justify-between items-center h-20">
-                            <button className="bg-[#6E7191] active:bg-[#3c3f5f] h-8 md:h-10 w-full md:w-3/12 rounded-lg md:rounded text-white tracking-wider font-semibold text-sm">Ticket
-                                used</button>
-                            <Link className="hidden md:block text-[#AAA] text-sm tracking-wide">See Details</Link>
-                        </div>
-                    </div> */}
                 </section>
             </main>
             <Footer />

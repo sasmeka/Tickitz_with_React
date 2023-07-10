@@ -41,7 +41,6 @@
     </li>
     <li><a href="#usage">Usage</a></li>
     <li><a href="#screenshot">Usage</a></li>
-    <li><a href="#contact">Contact</a></li>
   </ol>
 </details>
 
@@ -50,11 +49,13 @@
 <!-- ABOUT THE PROJECT -->
 ## About The Project
 
-This project employs React to create a front-end app from a Tickitz mockup with all of its functionality working properly.. The pages created in this project are:
+This project employs React to create a front-end app from a Tickitz mockup with all of its functionality working properly. The pages created in this project are:
 1. Sign in & sign up
 2. Home
 3. List movie
 4. Detail Movie
+5. Profile
+6. Managemen Movie (admin)
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
@@ -66,6 +67,8 @@ This project is based on :
 * [![html5][html5.js]][html5-url]
 * [![tailwind][tailwind.js]][tailwind-url]
 * [![javascript][javascript.js]][javascript-url]
+* [![nodejs][nodejs.js]][nodejs-url]
+* [![react][react.js]][react-url]
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
@@ -78,11 +81,16 @@ This project worker can follow the steps below:
 
 ### Installation
 
-1. Clone the repo
+1. You have to install nodejs first
+2. Clone the repo
    ```sh
    git clone https://github.com/sasmeka/tickitz_with_react.git
    ```
-2. Open file index.html
+3. Open terminal / cmd from your project folder
+4. To install dependencies
+   ```sh
+   npm install
+   ```
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
@@ -91,23 +99,18 @@ This project worker can follow the steps below:
 <!-- USAGE EXAMPLES -->
 ## Usage
 
-After you clone, please open the index.html file to see the results.
+1. Open terminal / cmd from your project folder
+2. To run type command
+   ```sh
+   npm start
+   
+   #OR
+
+   npm run react-scripts start
+   ```
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
-<!-- USAGE EXAMPLES -->
-## Screenshot
-
-1. List Movie
-[![Product Name Screen Shot][product-screenshot1]](https://example.com)
-2. Profile
-[![Product Name Screen Shot][product-screenshot2]](https://example.com)
-3. Order History
-[![Product Name Screen Shot][product-screenshot3]](https://example.com)
-4. Payment
-[![Product Name Screen Shot][product-screenshot4]](https://example.com)
-
-<p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 <!-- CONTACT -->
 ## Contact
@@ -132,7 +135,7 @@ Project Link: [https://github.com/sasmeka/tickitz_with_react](https://github.com
 [tailwind-url]: https://tailwindcss.com/
 [javascript.js]: https://img.shields.io/badge/javascript-000000?style=for-the-badge&logo=javascript&logoColor=white
 [javascript-url]: https://www.javascript.com/
-[product-screenshot1]: assets/screenshot/list_movie.png
-[product-screenshot2]: assets/screenshot/profile.png
-[product-screenshot3]: assets/screenshot/order_history.png
-[product-screenshot4]: assets/screenshot/payment.png
+[nodejs.js]: https://img.shields.io/badge/nodejs-339933?style=for-the-badge&logo=nodejs&logoColor=white
+[nodejs-url]: https://nodejs.org/
+[react.js]: https://img.shields.io/badge/react-61DAFB?style=for-the-badge&logo=react&logoColor=white
+[react-url]: https://react.dev/

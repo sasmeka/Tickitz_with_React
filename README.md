@@ -135,7 +135,7 @@ Project Link: [https://github.com/sasmeka/tickitz_with_react](https://github.com
 [tailwind-url]: https://tailwindcss.com/
 [javascript.js]: https://img.shields.io/badge/javascript-000000?style=for-the-badge&logo=javascript&logoColor=white
 [javascript-url]: https://www.javascript.com/
-[nodejs.js]: https://img.shields.io/badge/nodejs-339933?style=for-the-badge&logo=nodejs&logoColor=white
+[nodejs.js]: https://img.shields.io/badge/nodejs-339933?style=for-the-badge&logo=nodedotjs&logoColor=white
 [nodejs-url]: https://nodejs.org/
 [react.js]: https://img.shields.io/badge/react-61DAFB?style=for-the-badge&logo=react&logoColor=white
 [react-url]: https://react.dev/

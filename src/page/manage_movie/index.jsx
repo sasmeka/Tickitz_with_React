@@ -19,7 +19,7 @@ function Manage_Movie() {
   const imgRef = useRef(null);
 
   const dispatch = useDispatch()
-  const { isAuth } = useSelector((s) => s.user)
+  const { isAuth, data } = useSelector((s) => s.user)
   const getDataUser = async () => {
     try {
       const { data } = await api({ method: 'get', url: `user/byid` })
@@ -259,7 +259,7 @@ function Manage_Movie() {
   // ----------------------------------------------
   useEffect(() => {
     document.title = "Manage Movie";
-    if (isAuth) {
+    if (isAuth && data[0].role == 'admin') {
       getDataUser()
     } else {
       dispatch(logout())

@@ -4,36 +4,15 @@ import Header from "../../component/header";
 import Footer from "../../component/footer";
 import useApi from '../../helper/useApi'
 import { Link, useNavigate } from "react-router-dom";
-
-import { useSelector } from "react-redux";
-import { adddata, logout } from '../../store/reducer/user'
-import { useDispatch } from "react-redux";
+import authChecked from '../../helper/authCheck'
+import { useSelector } from 'react-redux'
 
 function Profile() {
     const api = useApi()
     const navigates = useNavigate();
     const imgRef = useRef(null);
 
-    const dispatch = useDispatch()
-    const { isAuth, data } = useSelector((s) => s.user)
-    const getDataUser = async () => {
-        try {
-            const { data } = await api({ method: 'get', url: `user/byid` })
-            dispatch(adddata(data.data))
-            if (data.data[0].status_verification == 0) {
-                dispatch(logout())
-                sessionStorage.clear()
-                navigates(`/sign-in`)
-            }
-        } catch (error) {
-            if (error.response.data.status == 401) {
-                dispatch(logout())
-                sessionStorage.clear()
-                navigates(`/sign-in`)
-            }
-            console.log(error.response.data)
-        }
-    }
+    const { data } = useSelector((s) => s.user)
 
     function capitalTitle(text) {
         return text.replace(/\w\S*/g, function (word) {
@@ -142,13 +121,6 @@ function Profile() {
     // ----------------------------------------------
     useEffect(() => {
         document.title = "Profile";
-        if (isAuth) {
-            getDataUser()
-        } else {
-            dispatch(logout())
-            sessionStorage.clear()
-            navigates(`/sign-in`)
-        }
         getDataBooking()
     }, []);
     useEffect(() => {
@@ -293,4 +265,4 @@ function Profile() {
     );
 }
 
-export default Profile;
+export default authChecked(true, Profile, ['admin', 'user'])

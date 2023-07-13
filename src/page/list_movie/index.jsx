@@ -4,30 +4,11 @@ import Pagination from "../../component/pagination"
 import Footer from "../../component/footer";
 import useApi from '../../helper/useApi'
 import { useNavigate } from 'react-router-dom'
-
-import { useSelector } from "react-redux";
-import { adddata, logout } from '../../store/reducer/user'
-import { useDispatch } from "react-redux";
+import authChecked from '../../helper/authCheck'
 
 function List_Movie() {
     const api = useApi()
     const navigates = useNavigate()
-
-    const dispatch = useDispatch()
-    const { isAuth } = useSelector((s) => s.user)
-    const getDataUser = async () => {
-        try {
-            const { data } = await api({ method: 'get', url: `user/byid` })
-            dispatch(adddata(data.data))
-        } catch (error) {
-            if (error.response.data.status == 401) {
-                dispatch(logout())
-                sessionStorage.clear()
-                navigates(`/sign-in`)
-            }
-            console.log(error.response.data)
-        }
-    }
 
     const [movies, setmovies] = useState([]);
     const [metamovies, setmetamovies] = useState([]);
@@ -79,9 +60,6 @@ function List_Movie() {
 
     useEffect(() => {
         document.title = 'List Movie';
-        if (isAuth) {
-            getDataUser()
-        }
         getMovies()
     }, []);
     useEffect(() => {
@@ -158,4 +136,4 @@ function List_Movie() {
     )
 }
 
-export default List_Movie
+export default authChecked(false, List_Movie, ['admin', 'user'])

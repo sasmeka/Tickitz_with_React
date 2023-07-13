@@ -7,32 +7,13 @@ import useApi from '../../helper/useApi'
 import profile from "../../assets/img/profile.png";
 import Select from "react-select";
 import { Link, useNavigate } from "react-router-dom";
-
-import { useSelector } from "react-redux";
-import { adddata, logout } from '../../store/reducer/user'
-import { useDispatch } from "react-redux";
+import authChecked from '../../helper/authCheck'
 
 function Manage_Movie() {
   const api = useApi()
   const navigates = useNavigate();
   const dateRef = useRef(null);
   const imgRef = useRef(null);
-
-  const dispatch = useDispatch()
-  const { isAuth, data } = useSelector((s) => s.user)
-  const getDataUser = async () => {
-    try {
-      const { data } = await api({ method: 'get', url: `user/byid` })
-      dispatch(adddata(data.data))
-    } catch (error) {
-      if (error.response.data.status == 401) {
-        dispatch(logout())
-        sessionStorage.clear()
-        navigates(`/sign-in`)
-      }
-      console.log(error.response.data)
-    }
-  }
 
   const [movies, setmovies] = useState([]);
   const [metamovies, setmetamovies] = useState([]);
@@ -259,13 +240,6 @@ function Manage_Movie() {
   // ----------------------------------------------
   useEffect(() => {
     document.title = "Manage Movie";
-    if (isAuth && data[0].role == 'admin') {
-      getDataUser()
-    } else {
-      dispatch(logout())
-      sessionStorage.clear()
-      navigates(`/sign-in`)
-    }
     getMovies();
     getDirector();
     getCategory();
@@ -642,4 +616,4 @@ function Manage_Movie() {
   );
 }
 
-export default Manage_Movie;
+export default authChecked(true, Manage_Movie, ['admin'])

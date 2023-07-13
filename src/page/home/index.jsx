@@ -6,30 +6,11 @@ import home2 from '../../assets/img/home2.png'
 import home3 from '../../assets/img/home3.png'
 import { Link, useNavigate } from 'react-router-dom'
 import useApi from '../../helper/useApi'
-
-import { useSelector } from "react-redux";
-import { adddata, logout } from '../../store/reducer/user'
-import { useDispatch } from "react-redux";
+import authChecked from '../../helper/authCheck'
 
 function Home() {
     const api = useApi()
     const navigates = useNavigate()
-
-    const dispatch = useDispatch()
-    const { isAuth } = useSelector((s) => s.user)
-    const getDataUser = async () => {
-        try {
-            const { data } = await api({ method: 'get', url: `user/byid` })
-            dispatch(adddata(data.data))
-        } catch (error) {
-            if (error.response.data.status == 401) {
-                dispatch(logout())
-                sessionStorage.clear()
-                navigates(`/sign-in`)
-            }
-            console.log(error.response.data)
-        }
-    }
 
     const [ismovieHovering, setIsmovieHovering] = useState('');
     const [hovimg, sethovimg] = useState('');
@@ -80,9 +61,6 @@ function Home() {
 
     useEffect(() => {
         document.title = 'Home';
-        if (isAuth) {
-            getDataUser()
-        }
         getMovies()
         getNowshowing()
     }, []);
@@ -202,4 +180,4 @@ function Home() {
     )
 }
 
-export default Home
+export default authChecked(false, Home, ['admin', 'user'])

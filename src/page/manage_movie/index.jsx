@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useRef } from "react";
+import React, { useEffect, useState, useRef, useContext } from "react";
 import moment from "moment/moment";
 import Header from "../../component/header";
 import Pagination from "../../component/pagination";
@@ -8,12 +8,19 @@ import profile from "../../assets/img/profile.png";
 import Select from "react-select";
 import { Link, useNavigate } from "react-router-dom";
 import authChecked from '../../helper/authCheck'
+import { logout } from '../../store/reducer/user'
+import { useDispatch } from 'react-redux'
+
+import SuccessContext from "../../helper/context_success";
+import ErrorContext from "../../helper/context_error";
 
 function Manage_Movie() {
   const api = useApi()
   const navigates = useNavigate();
   const dateRef = useRef(null);
   const imgRef = useRef(null);
+
+  const dispatch = useDispatch()
 
   const [movies, setmovies] = useState([]);
   const [metamovies, setmetamovies] = useState([]);
@@ -30,6 +37,9 @@ function Manage_Movie() {
   const [pageactive, setpageactive] = useState(1);
   const [sort, setsort] = useState("");
   const [search, setsearch] = useState("");
+
+  const { error_message, seterror_message } = useContext(ErrorContext);
+  const { success_message, setsuccess_message } = useContext(SuccessContext);
 
   const getMovies = async () => {
     try {
@@ -198,8 +208,15 @@ function Manage_Movie() {
           }
         });
       }
+      setsuccess_message(data.data.message)
       console.log(data.data);
     } catch (error) {
+      if (error.response.data.status == 401) {
+        seterror_message(error.response.data.message)
+        dispatch(logout())
+        navigates(`/sign-in`)
+      }
+      seterror_message(error.response.data.message)
       console.log(error.response.data);
     }
   };
@@ -216,7 +233,14 @@ function Manage_Movie() {
       const { data } = await api({ method: 'delete', url: `movie/${delid_movie}` });
       console.log(data);
       hidden_modal_delete();
+      setsuccess_message(data.message)
     } catch (error) {
+      if (error.response.data.status == 401) {
+        seterror_message(error.response.data.message)
+        dispatch(logout())
+        navigates(`/sign-in`)
+      }
+      seterror_message(error.response.data.message)
       console.log(error.response.data);
     }
   };
@@ -247,7 +271,11 @@ function Manage_Movie() {
   }, []);
   useEffect(() => {
     getMovies();
-  }, [pageactive, sort, search, insert_data, delete_data]);
+    setTimeout(() => {
+      seterror_message('')
+      setsuccess_message('')
+    }, 7000)
+  }, [pageactive, sort, search, insert_data, delete_data, error_message, success_message]);
 
   return (
     <>
@@ -466,6 +494,18 @@ function Manage_Movie() {
                   placeholder="Your message"
                 ></textarea>
               </p>
+            </div>
+            <div>
+              {
+                error_message != '' ? (
+                  <div className="md:col-span-5 lg:col-span-4 text-red-600 tracking-wide mb-3 text-sm">{error_message}</div>
+                ) : ''
+              }
+              {
+                success_message != '' ? (
+                  <div className="md:col-span-5 lg:col-span-4 text-green-600 tracking-wide mb-3 text-sm">{success_message}</div>
+                ) : ''
+              }
             </div>
             <div className="md:col-span-5 lg:col-span-4 flex justify-end">
               <button onClick={reset_form} className="mt-3 h-10 w-40 rounded border border-[#5F2EEA] text-[#5F2EEA] text-sm font-semibold leading-none hover:bg-[#5F2EEA] active:bg-[#2A00A2] hover:text-white mr-5">

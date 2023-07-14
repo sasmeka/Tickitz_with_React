@@ -1,11 +1,15 @@
-import React, { useEffect, useState, useRef } from "react";
+import React, { useEffect, useState, useRef, useContext } from "react";
 import moment from "moment/moment";
 import Header from "../../component/header";
 import Footer from "../../component/footer";
 import useApi from '../../helper/useApi'
 import { Link, useNavigate } from "react-router-dom";
 import authChecked from '../../helper/authCheck'
-import { useSelector } from 'react-redux'
+import { useSelector, useDispatch } from 'react-redux'
+import { adddata, logout } from '../../store/reducer/user'
+
+import SuccessContext from "../../helper/context_success";
+import ErrorContext from "../../helper/context_error";
 
 function Profile() {
     const api = useApi()
@@ -13,6 +17,26 @@ function Profile() {
     const imgRef = useRef(null);
 
     const { data } = useSelector((s) => s.user)
+    const dispatch = useDispatch()
+
+    const logout_user = () => {
+        dispatch(logout())
+        navigates(`/sign-in`)
+    }
+
+    const getDataUser = async () => {
+        try {
+            const { data } = await api({ method: 'get', url: `user/byid` })
+            dispatch(adddata(data.data))
+        } catch (error) {
+            if (error.response.data.status == 401) {
+                seterror_message(error.response.data.message)
+                logout_user()
+            }
+            seterror_message(error.response.data.message)
+            console.log(error.response.data)
+        }
+    }
 
     function capitalTitle(text) {
         return text.replace(/\w\S*/g, function (word) {
@@ -26,6 +50,9 @@ function Profile() {
     const [account_set, setaccount_set] = useState(true)
     const [order_history, setorder_history] = useState(false)
     const [modal_logout, setmodal_logout] = useState(false)
+
+    const { error_message, seterror_message } = useContext(ErrorContext);
+    const { success_message, setsuccess_message } = useContext(SuccessContext);
 
     const btnaccount_setting = () => {
         settab_as(true)
@@ -67,8 +94,15 @@ function Profile() {
                 }
             });
             getDataUser()
-            console.log(data);
+            setsuccess_message(data.message)
+            console.log(data)
         } catch (error) {
+            if (error.response.data.status == 401) {
+                seterror_message(error.response.data.message)
+                dispatch(logout())
+                navigates(`/sign-in`)
+            }
+            seterror_message(error.response.data.error)
             console.log(error.response.data);
         }
     };
@@ -82,7 +116,14 @@ function Profile() {
                 method: 'put', data: { 'pass': pass }, url: `user/change_password`,
             });
             console.log(data);
+            setsuccess_message(data.message)
         } catch (error) {
+            if (error.response.data.status == 401) {
+                seterror_message(error.response.data.message)
+                dispatch(logout())
+                navigates(`/sign-in`)
+            }
+            seterror_message(error.response.data.error)
             console.log(error.response.data);
         }
     };
@@ -125,7 +166,11 @@ function Profile() {
     }, []);
     useEffect(() => {
         setfull_name(first_name + ' ' + last_name)
-    }, [first_name, last_name])
+        setTimeout(() => {
+            seterror_message('')
+            setsuccess_message('')
+        }, 7000)
+    }, [first_name, last_name, error_message, success_message])
 
     return (
         <>
@@ -171,9 +216,18 @@ function Profile() {
                     </div>
                 </section>
                 <section className={account_set ? 'block col-span-2 md:col-span-3 flex flex-col md:my-5' : 'hidden'}>
-                    <div className="bg-white rounded-2xl md:rounded-xl grid gap-y-2 md:gap-x-5 md:grid-cols-2 md:grid-rows-[40px_1fr_1fr] px-5 py-8 mb-5 mx-5 md:mx-0 md:my-5 shadow-sm">
-                        <div className="md:col-span-2 border-b text-sm font-bold tracking-wide pb-2 md:pb-0">Details Information
-                        </div>
+                    <div className={"bg-white rounded-2xl md:rounded-xl grid gap-y-2 md:gap-x-5 md:grid-cols-2 md:grid-rows-[40px" + (error_message != '' || success_message != '' ? '_10px' : '') + "_1fr_1fr] px-5 py-8 mb-5 mx-5 md:mx-0 md:my-5 shadow-sm"}>
+                        <div className="md:col-span-2 border-b text-sm font-bold tracking-wide pb-2 md:pb-0">Details Information</div>
+                        {
+                            error_message != '' ? (
+                                <div className="md:col-span-2 text-red-600 tracking-wide mb-3 text-sm">{error_message}</div>
+                            ) : ''
+                        }
+                        {
+                            success_message != '' ? (
+                                <div className="md:col-span-2 text-green-600 tracking-wide mb-3 text-sm">{success_message}</div>
+                            ) : ''
+                        }
                         <div className="flex md:hidden flex-col mt-3">
                             <label className="text-sm py-2">Full Name</label>
                             <input className="h-12 w-full rounded-xl border border-[#DEDEDE] placeholder:text-sm pl-3 text-[#4E4B66]" value={full_name} onChange={(e) => setfull_name(e.target.value)} placeholder="Verdi Sasmeka" />

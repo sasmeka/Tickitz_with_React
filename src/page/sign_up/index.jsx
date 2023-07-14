@@ -1,9 +1,11 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import logo2 from '../../assets/img/logo2.png'
 import { Link, useNavigate } from 'react-router-dom'
 import Leftback from '../../component/left-background'
 import useApi from '../../helper/useApi'
 
+import SuccessContext from "../../helper/context_success";
+import ErrorContext from "../../helper/context_error";
 
 function Sign_up() {
     const api = useApi()
@@ -15,6 +17,9 @@ function Sign_up() {
     const [password, setpassword] = useState('')
     const [errors, seterrors] = useState([])
     const [cpass, setcpass] = useState(true)
+
+    const { error_message, seterror_message } = useContext(ErrorContext);
+    const { success_message, setsuccess_message } = useContext(SuccessContext);
 
     const Register = async (e) => {
         e.preventDefault()
@@ -28,10 +33,10 @@ function Sign_up() {
                     "pass": password
                 }
             })
-            sessionStorage.setItem('success', data.message)
+            setsuccess_message(data.message)
             navigate('/sign-in');
         } catch (error) {
-            seterrors(error.response.data)
+            seterror_message(error.response.data.message)
         }
     }
     const click_pass = () => {
@@ -40,6 +45,13 @@ function Sign_up() {
     useEffect(() => {
         document.title = 'Sign Up';
     }, []);
+
+    useEffect(() => {
+        setTimeout(() => {
+            seterror_message('')
+            setsuccess_message('')
+        }, 7000)
+    }, [error_message, success_message]);
     return (
         <>
             <div className="grid md:grid-cols-5 grid-rows-1">
@@ -49,7 +61,11 @@ function Sign_up() {
                     <form onSubmit={Register}>
                         <h1 className="text-2xl md:text-4xl font-bold my-2">Sign Up</h1>
                         <p className="text-[#AAAAAA] text-md md:text-lg tracking-wide mb-8">Fill your additional details</p>
-                        <p className="text-red-600 tracking-wide mb-3 text-sm">{errors ? errors.message : ""}</p>
+                        {
+                            error_message != '' ? (
+                                <div className="text-red-600 tracking-wide mb-3 text-sm">{error_message}</div>
+                            ) : ''
+                        }
                         <div className="flex flex-col mb-5">
                             <label className="mb-3 text-sm md:text-md text-[#4E4B66]">First Name</label>
                             <input type="text" onChange={(e) => setfirst(e.target.value)} className="h-10 md:h-12 w-full border border-[#DEDEDE] rounded-xl pl-5 placeholder:text-[#A0A3BD] placeholder:tracking-wider" placeholder="Write your first name" />

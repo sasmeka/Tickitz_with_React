@@ -8,6 +8,7 @@ import { Link, useNavigate } from 'react-router-dom'
 import useApi from '../../helper/useApi'
 import authChecked from '../../helper/authCheck'
 
+
 function Home() {
     const api = useApi()
     const navigates = useNavigate()

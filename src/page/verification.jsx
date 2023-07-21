@@ -1,6 +1,9 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useContext } from "react";
 import useApi from '../helper/useApi'
 import { useLocation, useNavigate } from 'react-router-dom'
+
+import SuccessContext from "../helper/context_success";
+import ErrorContext from "../helper/context_error";
 
 function Verification() {
     const api = useApi()
@@ -8,12 +11,15 @@ function Verification() {
     const navigates = useNavigate();
     const query = React.useMemo(() => new URLSearchParams(search), [search]);
 
+    const { error_message, seterror_message } = useContext(ErrorContext);
+    const { success_message, setsuccess_message } = useContext(SuccessContext);
+
     const process_verification = async () => {
         try {
             const { data } = await api({ method: 'get', url: 'verification?token=' + query.get('token') })
-            sessionStorage.setItem('success', data.message)
+            setsuccess_message(data.message)
         } catch (error) {
-            sessionStorage.setItem('errors', 'Link verification expire.')
+            seterror_message('Link verification expire.')
         }
     }
     useEffect(() => {
